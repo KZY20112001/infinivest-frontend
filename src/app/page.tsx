@@ -1,5 +1,5 @@
+import { quicksand, raleway } from "@/app/fonts";
 import { Button, Flex, Text } from "@chakra-ui/react";
-import { quicksand, raleway } from "./fonts";
 
 const Home = () => {
   return (
@@ -19,7 +19,7 @@ const Home = () => {
       >
         <Text
           fontSize="9xl"
-          fontWeight="extrabold"
+          fontWeight="bold"
           className={`${quicksand.className} bg-gradient-to-l from-black to-[#b8860b] bg-clip-text `}
           color={"transparent"}
         >
@@ -43,7 +43,7 @@ const Home = () => {
         alignItems="center"
         gap="1rem"
         color="black"
-        fontWeight={"semibold"}
+        fontWeight={"bold"}
       >
         <Button
           height="3.5rem"
@@ -54,7 +54,7 @@ const Home = () => {
           className={raleway.className}
           _hover={{
             backgroundColor: "gray.100",
-            fontWeight: "bold",
+            fontWeight: "extrabold",
           }}
         >
           Register
@@ -64,11 +64,11 @@ const Home = () => {
           width="15rem"
           fontSize="xl"
           margin="10px 10px"
-          backgroundColor="gray.100"
+          backgroundColor="white"
           className={raleway.className}
           _hover={{
             backgroundColor: "gray.100",
-            fontWeight: "bold",
+            fontWeight: "extrabold",
           }}
         >
           Login
