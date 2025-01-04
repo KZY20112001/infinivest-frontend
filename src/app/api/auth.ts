@@ -18,13 +18,15 @@ export async function signIn(
       maxAge: 3 * 60 * 60,
       secure: true,
       httpOnly: true,
+      sameSite: true,
     });
 
     cookieStore.set("refresh_token", response.tokens.refresh_token, {
       path: "/",
-      maxAge: 24 * 60 * 60,
+      maxAge: 8 * 60 * 60,
       secure: true,
       httpOnly: true,
+      sameSite: true,
     });
     return true;
   } catch (error) {
@@ -34,5 +36,30 @@ export async function signIn(
 }
 
 export async function signUp(email: string, password: string) {
-  console.log(email, password);
+  try {
+    const response = await apiClient<AuthResponse>("/user/signup", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
+    const cookieStore = await cookies();
+    cookieStore.set("access_token", response.tokens.access_token, {
+      path: "/",
+      maxAge: 3 * 60 * 60,
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+
+    cookieStore.set("refresh_token", response.tokens.refresh_token, {
+      path: "/",
+      maxAge: 8 * 60 * 60,
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+    return true;
+  } catch (error) {
+    console.error("Login failed:", error);
+    return false;
+  }
 }

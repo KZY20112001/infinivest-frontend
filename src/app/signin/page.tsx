@@ -1,8 +1,10 @@
-import { Flex, Text } from "@chakra-ui/react";
-import { quicksand } from "@/app/fonts";
-import { AuthForm } from "@/components/form";
 import type { Metadata } from "next";
-import { signIn } from "@/app/api/auth";
+
+import { quicksand } from "@/app/fonts";
+import { SignInForm } from "@/components/form";
+
+import { Flex, Text } from "@chakra-ui/react";
+
 export const metadata: Metadata = {
   title: "Sign In",
   description: "Sign in as a returning user",
@@ -25,7 +27,7 @@ const SignIn = () => {
       >
         Are you an existing user?
       </Text>
-      <AuthForm type="Sign In" onSubmit={signIn} />
+      <SignInForm />
     </Flex>
   );
 };
