@@ -1,5 +1,8 @@
 "use client";
+import NextLink from "next/link";
+import { useState } from "react";
 
+import { signIn } from "@/app/api/auth";
 import { quicksand, raleway } from "@/app/fonts";
 import { InputGroup } from "@/components/ui/input-group";
 
@@ -8,20 +11,14 @@ import {
   FormHelperText,
   FormLabel,
 } from "@chakra-ui/form-control";
-import { Box, Button, Input, Text } from "@chakra-ui/react";
-import { FC, useState } from "react";
+import { Flex, Input, Text, Link as ChakraLink } from "@chakra-ui/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
 
-interface AuthFormProps {
-  type: "Sign In" | "Sign Up";
-  onSubmit: (email: string, password: string) => Promise<boolean>;
-}
-
-const AuthForm: FC<AuthFormProps> = ({ type, onSubmit }) => {
+const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -44,8 +41,7 @@ const AuthForm: FC<AuthFormProps> = ({ type, onSubmit }) => {
         ),
     }),
     onSubmit: async (values) => {
-      console.log(values);
-      const isSuccessful = await onSubmit(values.email, values.password);
+      const isSuccessful = await signIn(values.email, values.password);
       console.log("Result: ", isSuccessful);
       if (isSuccessful) {
         toast("Successful");
@@ -73,6 +69,7 @@ const AuthForm: FC<AuthFormProps> = ({ type, onSubmit }) => {
             borderWidth={"1px"}
             color="black"
             px="2"
+            autoComplete="on"
           />
           {formik.touched.email && formik.errors.email && (
             <FormHelperText
@@ -86,7 +83,7 @@ const AuthForm: FC<AuthFormProps> = ({ type, onSubmit }) => {
             </FormHelperText>
           )}
         </FormControl>
-        <FormControl mb="32" className={raleway.className}>
+        <FormControl mb="24" className={raleway.className}>
           <FormLabel color="black" mb="8">
             <Text fontWeight={"semibold"} fontSize="xl">
               Password
@@ -95,15 +92,22 @@ const AuthForm: FC<AuthFormProps> = ({ type, onSubmit }) => {
           <InputGroup
             endElement={
               showPassword ? (
-                <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
+                <FaEyeSlash
+                  className="cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
               ) : (
-                <FaEye onClick={() => setShowPassword(!showPassword)} />
+                <FaEye
+                  className="cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
               )
             }
             width="full"
           >
             <Input
               id="password"
+              autoComplete="on"
               type={showPassword ? "text" : "password"}
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -126,30 +130,77 @@ const AuthForm: FC<AuthFormProps> = ({ type, onSubmit }) => {
             </FormHelperText>
           )}
         </FormControl>
-        <Box display="flex" justifyContent="center" width="full">
+
+        <Flex justifyContent="space-between" width="full" mb="6">
+          <ChakraLink asChild>
+            <NextLink href="/signup">
+              <Button
+                type="submit"
+                background="teal"
+                borderRadius="xl"
+                px="5"
+                py="2"
+                className={quicksand.className}
+                backgroundColor="white"
+                fontWeight="semibold"
+                color={"black"}
+                fontSize="sm"
+                _hover={{
+                  backgroundColor: "gray.100",
+                  fontWeight: "extrabold",
+                }}
+              >
+                New User?
+              </Button>
+            </NextLink>
+          </ChakraLink>
+          <ChakraLink asChild>
+            <NextLink href="/signup">
+              <Button
+                type="submit"
+                background="teal"
+                borderRadius="xl"
+                px="5"
+                py="2"
+                className={quicksand.className}
+                backgroundColor="white"
+                fontWeight="semibold"
+                color={"black"}
+                fontSize="sm"
+                _hover={{
+                  backgroundColor: "gray.100",
+                  fontWeight: "extrabold",
+                }}
+              >
+                Forgot Password
+              </Button>
+            </NextLink>
+          </ChakraLink>
+        </Flex>
+        <Flex justifyContent="center" width="full">
           <Button
             type="submit"
             background="teal"
             borderRadius="xl"
-            px="7"
-            py="2"
+            px="10"
+            py="6"
             className={quicksand.className}
             backgroundColor="white"
             fontWeight="semibold"
             color={"black"}
-            fontSize="lg"
+            fontSize="xl"
             _hover={{
               backgroundColor: "gray.100",
               fontWeight: "extrabold",
             }}
           >
-            {type}
+            Login
           </Button>
-        </Box>
+        </Flex>
       </form>
       <ToastContainer />
     </>
   );
 };
 
-export default AuthForm;
+export default SignInForm;

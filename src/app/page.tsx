@@ -1,5 +1,9 @@
+import NextLink from "next/link";
+
 import { quicksand, raleway } from "@/app/fonts";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button } from "@/components/ui/button";
+
+import { Flex, Link as ChakraLink, Text } from "@chakra-ui/react";
 
 const Home = () => {
   return (
@@ -45,34 +49,42 @@ const Home = () => {
         color="black"
         fontWeight={"bold"}
       >
-        <Button
-          height="3.5rem"
-          width="15rem"
-          fontSize="xl"
-          margin="10px 10px"
-          backgroundColor="white"
-          className={raleway.className}
-          _hover={{
-            backgroundColor: "gray.100",
-            fontWeight: "extrabold",
-          }}
-        >
-          Register
-        </Button>
-        <Button
-          height="3.5rem"
-          width="15rem"
-          fontSize="xl"
-          margin="10px 10px"
-          backgroundColor="white"
-          className={raleway.className}
-          _hover={{
-            backgroundColor: "gray.100",
-            fontWeight: "extrabold",
-          }}
-        >
-          Login
-        </Button>
+        <ChakraLink asChild>
+          <NextLink href="/signup">
+            <Button
+              height="3.5rem"
+              width="15rem"
+              fontSize="xl"
+              margin="10px 10px"
+              backgroundColor="white"
+              className={raleway.className}
+              _hover={{
+                backgroundColor: "gray.100",
+                fontWeight: "extrabold",
+              }}
+            >
+              Register
+            </Button>
+          </NextLink>
+        </ChakraLink>
+        <ChakraLink asChild>
+          <NextLink href="/signin">
+            <Button
+              height="3.5rem"
+              width="15rem"
+              fontSize="xl"
+              margin="10px 10px"
+              backgroundColor="white"
+              className={raleway.className}
+              _hover={{
+                backgroundColor: "gray.100",
+                fontWeight: "extrabold",
+              }}
+            >
+              Login
+            </Button>
+          </NextLink>
+        </ChakraLink>
       </Flex>
     </Flex>
   );
