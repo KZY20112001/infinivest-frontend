@@ -1,7 +1,9 @@
+import NextLink from "next/link";
+
 import { quicksand, raleway } from "@/app/fonts";
 import { Button } from "@/components/ui/button";
+
 import { Flex, Link as ChakraLink, Text } from "@chakra-ui/react";
-import NextLink from "next/link";
 
 const Home = () => {
   return (
