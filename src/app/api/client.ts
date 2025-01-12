@@ -7,7 +7,7 @@ const UNGUARDED_ROUTES = ["/user/signin", "/user/signup"];
 export async function apiClient<T>(
   endpoint: string,
   options: RequestInit = {}
-): Promise<T> {
+): Promise<T | null> {
   const url = `${BASE_URL}${endpoint}`;
   const isGuarded = !UNGUARDED_ROUTES.includes(endpoint);
 
@@ -33,11 +33,11 @@ export async function apiClient<T>(
     // Retry the request
     return apiClient(endpoint, options);
   }
+  console.log(response);
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(
-      `HTTP error! status: ${response.status}, body: ${errorText}`
-    );
+    console.error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+    return null;
   }
   return response.json() as T;
 }
