@@ -3,6 +3,7 @@ import { Card, Flex } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Profile } from "@/types/profile";
+import { quicksand } from "@/app/fonts";
 
 interface ProfileCardProps {
   profile: Profile;
@@ -16,7 +17,20 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Card.Root width="320px">
+      <Card.Root
+        width="60%"
+        h="full"
+        display="flex"
+        flexDir="column"
+        alignItems={"center"}
+      >
+        <Card.Header
+          className={quicksand.className}
+          fontWeight={"bold"}
+          fontSize="3xl"
+        >
+          My Profile
+        </Card.Header>
         <Card.Body gap="2">
           <Avatar
             src={profile.profileUrl}
