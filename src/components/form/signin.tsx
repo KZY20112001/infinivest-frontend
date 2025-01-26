@@ -1,10 +1,12 @@
 "use client";
 import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { signIn } from "@/app/api/auth";
 import { quicksand, raleway } from "@/app/fonts";
 import { InputGroup } from "@/components/ui/input-group";
+import { Button } from "@/components/ui/button";
 
 import {
   FormControl,
@@ -16,9 +18,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
-import { Button } from "@/components/ui/button";
 
 const SignInForm = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -42,9 +44,9 @@ const SignInForm = () => {
     }),
     onSubmit: async (values) => {
       const isSuccessful = await signIn(values.email, values.password);
-      console.log("Result: ", isSuccessful);
       if (isSuccessful) {
         toast("Successful");
+        router.push("/profile");
       } else {
         toast("Wrong Credentials");
       }

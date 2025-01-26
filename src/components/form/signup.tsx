@@ -1,5 +1,6 @@
 "use client";
 import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { signUp } from "@/app/api/auth";
@@ -24,6 +25,7 @@ import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 
 const SignUpForm = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const formik = useFormik({
@@ -60,6 +62,7 @@ const SignUpForm = () => {
       console.log("Result: ", isSuccessful);
       if (isSuccessful) {
         toast("Successful");
+        router.push("/profile");
       } else {
         toast("Wrong Credentials");
       }

@@ -1,3 +1,4 @@
+"use server";
 import { apiClient } from "@/app/api/client";
 import { Profile, ProfileResponse } from "@/types/profile";
 
@@ -24,8 +25,8 @@ export async function fetchProfile(): Promise<Profile | null> {
     const response = await apiClient<ProfileResponse>("/profile", {
       method: "GET",
     });
-    if (!response) return null;
-    return parseResponse(response);
+    if (!response) return test;
+    return parseResponse(response!);
   } catch (error) {
     console.error("No profile exists", error);
     return null;

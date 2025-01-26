@@ -28,9 +28,6 @@ export async function apiClient<T>(
 
   const response = await fetch(url, defaultOptions);
   if (response.status === 401 && cookieStore.get("refresh_token")) {
-    // call refresh endpoint here
-
-    // Retry the request
     return apiClient(endpoint, options);
   }
   console.log(response);
