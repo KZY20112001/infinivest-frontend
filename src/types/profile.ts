@@ -1,15 +1,17 @@
 export interface Profile {
   firstName: string;
   lastName?: string;
-  email: string;
-  profileUrl: string;
+  address: string;
+  profileUrl?: string;
+  profileID?: string;
 }
 
 export interface ProfileResponse {
   profile: {
-    first_name: string;
-    last_name?: string;
-    email: string;
-    profile_url: string;
+    FirstName: string;
+    LastName?: string;
+    Address: string;
+    ProfileUrl: string;
+    ProfileID: string;
   };
 }

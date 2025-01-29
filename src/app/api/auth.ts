@@ -64,7 +64,7 @@ export async function signUp(email: string, password: string) {
     });
     return true;
   } catch (error) {
-    console.error("Login failed:", error);
+    console.error("Registration failed:", error);
     return false;
   }
 }

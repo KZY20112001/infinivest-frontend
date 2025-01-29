@@ -59,7 +59,6 @@ const SignUpForm = () => {
     }),
     onSubmit: async (values) => {
       const isSuccessful = await signUp(values.email, values.password);
-      console.log("Result: ", isSuccessful);
       if (isSuccessful) {
         toast("Successful");
         router.push("/profile");

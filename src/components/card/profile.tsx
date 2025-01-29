@@ -25,7 +25,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
       alignItems={"center"}
     >
       <Card.Root
-        width="50%"
+        width="45%"
         h="full"
         display="flex"
         flexDir="column"
@@ -57,11 +57,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
         <Separator borderColor="black" borderWidth="1px" />
         <Card.Body width="full" fontSize="xl">
-          <Flex gap="10">
+          <Flex gap="20">
             <Image
               src={profile.profileUrl}
               alt="profile picture"
-              boxSize="300px"
+              boxSize="250px"
               fit="cover"
             />
 
@@ -69,13 +69,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
               <Flex gap="4">
                 <Text
                   className={quicksand.className}
-                  w="20"
+                  w="28"
                   fontWeight={"bold"}
                 >
                   Name :
                 </Text>
                 <Text
-                  className={raleway.className}
+                  className={quicksand.className}
                   textTransform={"capitalize"}
                 >
                   {profile.firstName} {profile.lastName}
@@ -84,12 +84,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
               <Flex gap="4">
                 <Text
                   className={quicksand.className}
-                  w="20"
+                  w="28"
                   fontWeight={"bold"}
                 >
-                  Email :
+                  Address :
                 </Text>
-                <Text className={raleway.className}>{profile.email}</Text>
+                <Text className={quicksand.className}>{profile.address}</Text>
               </Flex>
             </Flex>
           </Flex>

@@ -2,7 +2,12 @@ import { cookies } from "next/headers";
 
 const BASE_URL = process.env.BACKEND_SERVER_URL || "";
 
-const UNGUARDED_ROUTES = ["/user/signin", "/user/signup"];
+const UNGUARDED_ROUTES = [
+  "/user/signin",
+  "/user/signup",
+  "/user/refresh",
+  "/user/forgot-password",
+];
 
 export async function apiClient<T>(
   endpoint: string,
@@ -13,7 +18,6 @@ export async function apiClient<T>(
 
   const cookieStore = await cookies();
   const access_cookie = cookieStore.get("access_token");
-
   const defaultOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
@@ -30,10 +34,9 @@ export async function apiClient<T>(
   if (response.status === 401 && cookieStore.get("refresh_token")) {
     return apiClient(endpoint, options);
   }
-  console.log(response);
   if (!response.ok) {
     const errorText = await response.text();
-    console.error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+    console.log(`HTTP error! status: ${response.status}, body: ${errorText}`);
     return null;
   }
   return response.json() as T;
