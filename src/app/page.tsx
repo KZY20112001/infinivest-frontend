@@ -1,9 +1,9 @@
-import NextLink from "next/link";
+import Link from "next/link";
 
 import { quicksand, raleway } from "@/app/fonts";
 import { Button } from "@/components/ui/button";
 
-import { Flex, Link as ChakraLink, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
 const Home = () => {
   return (
@@ -49,42 +49,38 @@ const Home = () => {
         color="black"
         fontWeight={"bold"}
       >
-        <ChakraLink asChild>
-          <NextLink href="/signup">
-            <Button
-              height="3.5rem"
-              width="15rem"
-              fontSize="xl"
-              margin="10px 10px"
-              backgroundColor="white"
-              className={raleway.className}
-              _hover={{
-                backgroundColor: "gray.100",
-                fontWeight: "extrabold",
-              }}
-            >
-              Register
-            </Button>
-          </NextLink>
-        </ChakraLink>
-        <ChakraLink asChild>
-          <NextLink href="/signin">
-            <Button
-              height="3.5rem"
-              width="15rem"
-              fontSize="xl"
-              margin="10px 10px"
-              backgroundColor="white"
-              className={raleway.className}
-              _hover={{
-                backgroundColor: "gray.100",
-                fontWeight: "extrabold",
-              }}
-            >
-              Login
-            </Button>
-          </NextLink>
-        </ChakraLink>
+        <Link href="/signup">
+          <Button
+            height="3.5rem"
+            width="15rem"
+            fontSize="xl"
+            margin="10px 10px"
+            backgroundColor="white"
+            className={raleway.className}
+            _hover={{
+              backgroundColor: "gray.100",
+              fontWeight: "extrabold",
+            }}
+          >
+            Register
+          </Button>
+        </Link>
+        <Link href="/signin">
+          <Button
+            height="3.5rem"
+            width="15rem"
+            fontSize="xl"
+            margin="10px 10px"
+            backgroundColor="white"
+            className={raleway.className}
+            _hover={{
+              backgroundColor: "gray.100",
+              fontWeight: "extrabold",
+            }}
+          >
+            Login
+          </Button>
+        </Link>
       </Flex>
     </Flex>
   );

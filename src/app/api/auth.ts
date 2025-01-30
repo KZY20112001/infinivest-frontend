@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { apiClient } from "@/app/api/client";
-import { AuthResponse } from "@/app/types/auth";
+import { AuthResponse } from "@/types/auth";
 
 export async function signIn(
   email: string,
@@ -12,6 +12,9 @@ export async function signIn(
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
+
+    if (!response) return false;
+
     const cookieStore = await cookies();
     cookieStore.set("access_token", response.tokens.access_token, {
       path: "/",
@@ -41,6 +44,8 @@ export async function signUp(email: string, password: string) {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
+    if (!response) return false;
+
     const cookieStore = await cookies();
     cookieStore.set("access_token", response.tokens.access_token, {
       path: "/",
@@ -59,7 +64,7 @@ export async function signUp(email: string, password: string) {
     });
     return true;
   } catch (error) {
-    console.error("Login failed:", error);
+    console.error("Registration failed:", error);
     return false;
   }
 }
