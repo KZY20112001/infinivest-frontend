@@ -1,15 +1,4 @@
-import {
-  Raleway,
-  Open_Sans,
-  Quicksand,
-  Geist,
-  Geist_Mono,
-} from "next/font/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { Raleway, Open_Sans, Quicksand, Geist_Mono } from "next/font/google";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -33,4 +22,4 @@ const quicksand = Quicksand({
   variable: "--font-quicksand",
 });
 
-export { geistMono, geistSans, quicksand, open_sans, raleway };
+export { geistMono, quicksand, open_sans, raleway };

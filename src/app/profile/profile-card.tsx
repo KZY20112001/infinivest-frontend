@@ -40,8 +40,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
           position="relative"
         >
           <Link href="/">
-            <Button position="absolute" left="0">
-              <FaArrowLeft />
+            <Button position="absolute" left="4">
+              <FaArrowLeft className="text-blue-500 cursor-pointer" />
             </Button>
           </Link>
 
@@ -116,7 +116,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
             px="2"
             _hover={{ cursor: "pointer" }}
           >
-            Portfolio Settings
+            Set Up Portfolios
           </Button>
         </Card.Footer>
       </Card.Root>

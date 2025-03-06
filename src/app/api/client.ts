@@ -18,14 +18,28 @@ export async function apiClient<T>(
 
   const cookieStore = await cookies();
   const access_cookie = cookieStore.get("access_token");
-  const defaultOptions: RequestInit = {
-    headers: {
+
+  const isFormData = options.body instanceof FormData;
+
+  let headers;
+  if (isFormData) {
+    headers = {
+      ...(isGuarded && access_cookie
+        ? { Authorization: `Bearer ${access_cookie?.value}` }
+        : {}),
+      ...(options.headers || {}),
+    };
+  } else {
+    headers = {
       "Content-Type": "application/json",
       ...(isGuarded && access_cookie
         ? { Authorization: `Bearer ${access_cookie?.value}` }
         : {}),
       ...(options.headers || {}),
-    },
+    };
+  }
+  const defaultOptions: RequestInit = {
+    headers: headers,
     credentials: "include",
     ...options,
   };

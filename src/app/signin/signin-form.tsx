@@ -3,36 +3,30 @@ import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { signUp } from "@/app/api/auth";
+import { signIn } from "@/app/api/auth";
 import { quicksand, raleway } from "@/app/fonts";
 import { InputGroup } from "@/components/ui/input-group";
+import { Button } from "@/components/ui/button";
 
 import {
   FormControl,
   FormHelperText,
   FormLabel,
 } from "@chakra-ui/form-control";
-import {
-  Flex,
-  Button,
-  Input,
-  Link as ChakraLink,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Input, Text, Link as ChakraLink } from "@chakra-ui/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      confirmPassword: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -47,18 +41,9 @@ const SignUpForm = () => {
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,30})/,
           "At least 1 uppercase, 1 lowercase and 1 number"
         ),
-      confirmPassword: Yup.string()
-        .required("Enter your password again")
-        .min(8, "At least 8 characters!")
-        .max(30, "At most 30 characters!")
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,30})/,
-          "At least 1 uppercase, 1 lowercase and 1 number"
-        )
-        .oneOf([Yup.ref("password")], "Passwords must match"),
     }),
     onSubmit: async (values) => {
-      const isSuccessful = await signUp(values.email, values.password);
+      const isSuccessful = await signIn(values.email, values.password);
       if (isSuccessful) {
         toast("Successful");
         router.push("/profile");
@@ -100,7 +85,7 @@ const SignUpForm = () => {
             </FormHelperText>
           )}
         </FormControl>
-        <FormControl mb="32" className={raleway.className}>
+        <FormControl mb="24" className={raleway.className}>
           <FormLabel color="black" mb="8">
             <Text fontWeight={"semibold"} fontSize="xl">
               Password
@@ -147,56 +132,29 @@ const SignUpForm = () => {
             </FormHelperText>
           )}
         </FormControl>
-        <FormControl mb="24" className={raleway.className}>
-          <FormLabel color="black" mb="8">
-            <Text fontWeight={"semibold"} fontSize="xl">
-              Confirm Your Password
-            </Text>
-          </FormLabel>
-          <InputGroup
-            endElement={
-              showConfirmPassword ? (
-                <FaEyeSlash
-                  className="cursor-pointer"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                />
-              ) : (
-                <FaEye
-                  className="cursor-pointer"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                />
-              )
-            }
-            width="full"
+        <Flex justifyContent="center" width="full" mb="6">
+          <Button
+            type="submit"
+            background="teal"
+            borderRadius="xl"
+            px="10"
+            py="6"
+            className={quicksand.className}
+            backgroundColor="white"
+            fontWeight="semibold"
+            color={"black"}
+            fontSize="xl"
+            _hover={{
+              backgroundColor: "gray.100",
+              fontWeight: "extrabold",
+            }}
           >
-            <Input
-              id="confirmPassword"
-              autoComplete="on"
-              type={showConfirmPassword ? "text" : "password"}
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              required
-              borderWidth={"1px"}
-              color="black"
-              px="2"
-            />
-          </InputGroup>
-          {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-            <FormHelperText
-              marginRight={0}
-              marginLeft="auto"
-              textColor="red"
-              fontWeight="bold"
-              fontSize="small"
-            >
-              {formik.errors.confirmPassword}
-            </FormHelperText>
-          )}
-        </FormControl>
-        <Flex justifyContent="space-between" width="full" mb="6">
+            Login
+          </Button>
+        </Flex>
+        <Flex justifyContent="space-between" width="full">
           <ChakraLink asChild>
-            <NextLink href="/signin">
+            <NextLink href="/signup">
               <Button
                 type="submit"
                 background="teal"
@@ -213,7 +171,7 @@ const SignUpForm = () => {
                   fontWeight: "extrabold",
                 }}
               >
-                Have an account?
+                New User?
               </Button>
             </NextLink>
           </ChakraLink>
@@ -240,30 +198,10 @@ const SignUpForm = () => {
             </NextLink>
           </ChakraLink>
         </Flex>
-        <Flex justifyContent="center" width="full">
-          <Button
-            type="submit"
-            background="teal"
-            borderRadius="xl"
-            px="10"
-            py="6"
-            className={quicksand.className}
-            backgroundColor="white"
-            fontWeight="semibold"
-            color={"black"}
-            fontSize="xl"
-            _hover={{
-              backgroundColor: "gray.100",
-              fontWeight: "extrabold",
-            }}
-          >
-            Register
-          </Button>
-        </Flex>
       </form>
       <ToastContainer />
     </>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

@@ -14,9 +14,8 @@ export async function signIn(
     });
 
     if (!response) return false;
-
     const cookieStore = await cookies();
-    cookieStore.set("access_token", response.tokens.access_token, {
+    cookieStore.set("access_token", response.tokens.accessToken, {
       path: "/",
       maxAge: 3 * 60 * 60,
       secure: true,
@@ -24,7 +23,7 @@ export async function signIn(
       sameSite: true,
     });
 
-    cookieStore.set("refresh_token", response.tokens.refresh_token, {
+    cookieStore.set("refresh_token", response.tokens.refreshToken, {
       path: "/",
       maxAge: 8 * 60 * 60,
       secure: true,
@@ -47,7 +46,7 @@ export async function signUp(email: string, password: string) {
     if (!response) return false;
 
     const cookieStore = await cookies();
-    cookieStore.set("access_token", response.tokens.access_token, {
+    cookieStore.set("access_token", response.tokens.accessToken, {
       path: "/",
       maxAge: 3 * 60 * 60,
       secure: true,
@@ -55,7 +54,7 @@ export async function signUp(email: string, password: string) {
       sameSite: true,
     });
 
-    cookieStore.set("refresh_token", response.tokens.refresh_token, {
+    cookieStore.set("refresh_token", response.tokens.refreshToken, {
       path: "/",
       maxAge: 8 * 60 * 60,
       secure: true,
