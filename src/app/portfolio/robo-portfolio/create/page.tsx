@@ -44,7 +44,7 @@ const CreateRoboPortfolio = async () => {
             fontWeight="semibold"
             fontSize="lg"
           >
-            Robo-Portfolio already exists
+            There is an existing Robo-Portfolio
           </Text>
           <Link href="/portfolio/robo-portfolio">
             <Button

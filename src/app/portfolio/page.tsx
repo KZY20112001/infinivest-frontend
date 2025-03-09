@@ -5,7 +5,7 @@ import { Card, Flex, Text, Button } from "@chakra-ui/react";
 
 import { fetchRoboPortfolioSummary } from "@/app/api/robo-portfolio";
 import { fetchManualPortfolios } from "@/app/api/manual-portfolio";
-import { geistMono, quicksand, raleway } from "@/app/fonts";
+import { geistMono, raleway } from "@/app/fonts";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -65,7 +65,7 @@ const Portfolio = async () => {
               your investments with minimal setup.
             </Text>
             <Flex justifyContent={"space-between"}>
-              <Text className={quicksand.className}>
+              <Text className={geistMono.className}>
                 {roboPortfolioSummary
                   ? `Auto-Rebalances ${roboPortfolioSummary?.rebalanceFreq}`
                   : ""}

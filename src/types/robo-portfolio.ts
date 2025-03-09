@@ -25,7 +25,7 @@ export type RoboPortfolioCategory = {
 };
 
 export type RoboPortfolio = {
-  category: RoboPortfolioCategory[];
+  categories: RoboPortfolioCategory[];
   rebalanceFreq?: string;
 };
 
@@ -33,6 +33,7 @@ export type RoboPortfolioSummary = {
   rebalanceFreq: string;
   totalValue: number;
 };
+
 export type RoboPortfolioResponse = {
   portfolio: RoboPortfolio;
 };

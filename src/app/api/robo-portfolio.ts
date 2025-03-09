@@ -1,5 +1,5 @@
 "use server";
-import { apiClient } from "@/app/api/client";
+import { backendClient } from "@/app/api/client";
 import {
   RoboPortfolioCategoryAssets,
   RoboPortfolio,
@@ -14,7 +14,7 @@ import {
 
 export async function fetchRoboPortfolioSummary(): Promise<RoboPortfolioSummary | null> {
   try {
-    const response = await apiClient<RoboPortfolioSummaryResponse>(
+    const response = await backendClient<RoboPortfolioSummaryResponse>(
       "/portfolio/robo-portfolio/summary",
       {
         method: "GET",
@@ -29,7 +29,7 @@ export async function fetchRoboPortfolioSummary(): Promise<RoboPortfolioSummary 
 
 export async function fetchRoboPortfolio(): Promise<RoboPortfolio | null> {
   try {
-    const response = await apiClient<RoboPortfolioResponse>(
+    const response = await backendClient<RoboPortfolioResponse>(
       "/portfolio/robo-portfolio/details",
       {
         method: "GET",
@@ -52,7 +52,7 @@ export async function generatePortfolioSplit(
     formData.append("risk_tolerance_level", riskTolerance);
     formData.append("bank_name", bankName);
     formData.append("bank_statement", file);
-    const response = await apiClient<RoboPortfolioSplitResponse>(
+    const response = await backendClient<RoboPortfolioSplitResponse>(
       "/portfolio/robo-portfolio/generate/categories",
       {
         method: "POST",
@@ -82,7 +82,7 @@ export async function generatePortfolioAssets(
         cash: categorySplit.cash,
       },
     };
-    const response = await apiClient<RoboPortfolioAssetAllocationResponse>(
+    const response = await backendClient<RoboPortfolioAssetAllocationResponse>(
       "/portfolio/robo-portfolio/generate/assets",
       {
         method: "POST",
@@ -117,7 +117,7 @@ export async function createRoboPortfolio(
       allocations,
     };
     console.log("here: ", req);
-    const response = await apiClient<{ message: string }>(
+    const response = await backendClient<{ message: string }>(
       "/portfolio/robo-portfolio/confirm",
       { method: "POST", body: JSON.stringify(req) }
     );
@@ -127,5 +127,42 @@ export async function createRoboPortfolio(
   } catch (error) {
     console.error("Error in creating robo portfolio", error);
     return false;
+  }
+}
+
+export async function addMoneyToRoboPortfolio(
+  amount: number
+): Promise<boolean> {
+  try {
+    const response = await backendClient<{ message: string }>(
+      "/portfolio/robo-portfolio/add",
+      {
+        method: "POST",
+        body: JSON.stringify({ amount }),
+      }
+    );
+
+    if (!response) return false;
+    return true;
+  } catch (error) {
+    console.error("Error in adding money to robo portfolio", error);
+    return false;
+  }
+}
+
+export async function withdrawMoneyFromRoboPortfolio(
+  amount: number
+): Promise<number | null> {
+  try {
+    const response = await backendClient<{ amount: number }>(
+      "/portfolio/robo-portfolio/withdraw",
+      { method: "POST", body: JSON.stringify({ amount }) }
+    );
+    console.log(response);
+    if (!response) return null;
+    return response.amount;
+  } catch (error) {
+    console.error("Error in withdrawing money from robo portfolio", error);
+    return null;
   }
 }

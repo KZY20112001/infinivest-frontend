@@ -1,6 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
-import { apiClient } from "@/app/api/client";
+import { backendClient } from "@/app/api/client";
 import { AuthResponse } from "@/types/auth";
 
 export async function signIn(
@@ -8,7 +8,7 @@ export async function signIn(
   password: string
 ): Promise<boolean> {
   try {
-    const response = await apiClient<AuthResponse>("/user/signin", {
+    const response = await backendClient<AuthResponse>("/user/signin", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
@@ -39,7 +39,7 @@ export async function signIn(
 
 export async function signUp(email: string, password: string) {
   try {
-    const response = await apiClient<AuthResponse>("/user/signup", {
+    const response = await backendClient<AuthResponse>("/user/signup", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });

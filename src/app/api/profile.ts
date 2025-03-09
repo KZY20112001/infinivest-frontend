@@ -1,10 +1,10 @@
 "use server";
-import { apiClient } from "@/app/api/client";
+import { backendClient } from "@/app/api/client";
 import { Profile, ProfileResponse } from "@/types/profile";
 
 export async function fetchProfile(): Promise<Profile | null> {
   try {
-    const response = await apiClient<ProfileResponse>("/profile", {
+    const response = await backendClient<ProfileResponse>("/profile", {
       method: "GET",
     });
     return response ? response.profile : null;
@@ -23,7 +23,7 @@ export async function createProfile(profile: Profile): Promise<boolean> {
       profile_url: profile.profileUrl,
       profile_id: profile.profileID,
     };
-    const response = await apiClient<{ message: string }>("/profile", {
+    const response = await backendClient<{ message: string }>("/profile", {
       method: "POST",
       body: JSON.stringify(req),
     });
@@ -44,7 +44,7 @@ export async function updateProfile(profile: Profile): Promise<boolean> {
       profile_url: profile.profileUrl,
       profile_id: profile.profileID,
     };
-    const response = await apiClient<{ message: string }>("/profile", {
+    const response = await backendClient<{ message: string }>("/profile", {
       method: "PATCH",
       body: JSON.stringify(req),
     });
@@ -64,7 +64,7 @@ export async function generateProfilePictureUploadUrl(
       bucket_name: "infinivest",
       object_key: "profile-pics/" + name,
     };
-    const response = await apiClient<{ url: string }>("/s3/upload-url", {
+    const response = await backendClient<{ url: string }>("/s3/upload-url", {
       method: "POST",
       body: JSON.stringify(req),
     });

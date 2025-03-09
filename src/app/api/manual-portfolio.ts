@@ -1,5 +1,5 @@
 "use server";
-import { apiClient } from "@/app/api/client";
+import { backendClient } from "@/app/api/client";
 import {
   ManualPortfolio,
   ManualPortfoliosResponse,
@@ -7,7 +7,7 @@ import {
 
 export async function fetchManualPortfolios(): Promise<ManualPortfolio[]> {
   try {
-    const response = await apiClient<ManualPortfoliosResponse>(
+    const response = await backendClient<ManualPortfoliosResponse>(
       "/portfolio/manual/",
       {
         method: "GET",
