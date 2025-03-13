@@ -11,12 +11,12 @@ import DisplayCategories from "@/app/portfolio/robo-portfolio/display-categories
 
 import { RoboPortfolio, RoboPortfolioSummary } from "@/types/robo-portfolio";
 
-interface DisplayPortfolioProps {
+interface DisplayRoboPortfolioProps {
   roboPortfolio: RoboPortfolio;
   roboPortfolioSummary: RoboPortfolioSummary;
 }
 
-const DisplayPortfolio: FC<DisplayPortfolioProps> = ({
+const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
   roboPortfolio,
   roboPortfolioSummary,
 }) => {
@@ -54,12 +54,7 @@ const DisplayPortfolio: FC<DisplayPortfolioProps> = ({
         >
           <Flex gap="2">
             <Text w="48">Estimated Total Value: </Text>
-            <Text>
-              $
-              {Math.round(
-                (roboPortfolioSummary.totalValue + Number.EPSILON) * 100
-              ) / 100}
-            </Text>
+            <Text>${roboPortfolioSummary.totalValue.toFixed(2)}</Text>
           </Flex>
 
           <Flex gap="2">
@@ -79,4 +74,4 @@ const DisplayPortfolio: FC<DisplayPortfolioProps> = ({
   );
 };
 
-export default DisplayPortfolio;
+export default DisplayRoboPortfolio;

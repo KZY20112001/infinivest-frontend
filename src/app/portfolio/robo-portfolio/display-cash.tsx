@@ -31,16 +31,18 @@ const DisplayCash: FC<DisplayCashProps> = ({ cash, totalPercentage }) => {
           <BsInfoCircle color="black" size="20" className="cursor-pointer" />
         </Tooltip>
       </Flex>
-      <Flex
-        fontSize="md"
-        fontWeight={"semibold"}
-        gap="4"
-        alignItems={"center"}
-        className={raleway.className}
-      >
-        <Text w="48">Currently Available:</Text>
-        <Text px="8" borderRadius="xl" py="1" fontSize="lg">
-          $ {cash}
+      <Flex fontSize="md" fontWeight={"semibold"} gap="4" alignItems={"center"}>
+        <Text w="44" className={raleway.className}>
+          Currently Available:
+        </Text>
+        <Text
+          px="4"
+          borderRadius="xl"
+          py="1"
+          fontSize="lg"
+          className={quicksand.className}
+        >
+          $ {cash.toFixed(2)}
         </Text>
 
         {cash < 50 && (
@@ -59,16 +61,12 @@ const DisplayCash: FC<DisplayCashProps> = ({ cash, totalPercentage }) => {
           </Text>
         )}
       </Flex>
-      <Flex
-        fontSize="md"
-        fontWeight={"semibold"}
-        gap="4"
-        alignItems={"center"}
-        className={raleway.className}
-      >
-        <Text w="48">Allocated Percentage:</Text>
-        <Text px="8" py="1" fontSize="lg">
-          {totalPercentage} %
+      <Flex fontSize="md" fontWeight={"semibold"} gap="4" alignItems={"center"}>
+        <Text w="44" className={raleway.className}>
+          Allocated Percentage:
+        </Text>
+        <Text px="8" py="1" fontSize="lg" className={quicksand.className}>
+          {totalPercentage.toFixed(2)} %
         </Text>
       </Flex>
     </Flex>

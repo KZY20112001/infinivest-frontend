@@ -1,12 +1,6 @@
-import {
-  Button,
-  Card,
-  Flex,
-  Image,
-  Link,
-  Separator,
-  Text,
-} from "@chakra-ui/react";
+import Link from "next/link";
+
+import { Button, Card, Flex, Image, Separator, Text } from "@chakra-ui/react";
 import { Profile } from "@/types/profile";
 import { quicksand, raleway } from "@/app/fonts";
 import { FaArrowLeft } from "react-icons/fa";

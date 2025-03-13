@@ -1,5 +1,7 @@
 import { Metadata } from "next";
-import { Flex, Link, Text } from "@chakra-ui/react";
+import Link from "next/link";
+
+import { Flex, Text } from "@chakra-ui/react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import CreatePortfolio from "@/app/portfolio/robo-portfolio/create/create-portfolio";

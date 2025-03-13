@@ -1,12 +1,12 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 import { FaArrowRight } from "react-icons/fa";
 import { Card, Flex, Text, Button } from "@chakra-ui/react";
 
 import { fetchRoboPortfolioSummary } from "@/app/api/robo-portfolio";
 import { fetchManualPortfolios } from "@/app/api/manual-portfolio";
-import { geistMono, raleway } from "@/app/fonts";
-import Link from "next/link";
+import { geistMono, quicksand, raleway } from "@/app/fonts";
 
 export const metadata: Metadata = {
   title: "Infinivest | Portfolios",
@@ -72,7 +72,9 @@ const Portfolio = async () => {
               </Text>
               <Text className={geistMono.className}>
                 {roboPortfolioSummary
-                  ? `Current Estimated Value: $${roboPortfolioSummary?.totalValue}`
+                  ? `Current Estimated Value: $${roboPortfolioSummary?.totalValue.toFixed(
+                      2
+                    )}`
                   : "Set-up your Robo-advised Portfolio now!"}
               </Text>
             </Flex>
@@ -97,36 +99,40 @@ const Portfolio = async () => {
               Take full control of your investments by managing assets, cash,
               and allocations yourself.
             </Text>
-            <Card.Root
-              borderRadius="xl"
-              _hover={{ bg: "blue.100" }}
-              className="group"
-              backgroundColor="blue.50"
-            >
-              <Card.Header
-                fontSize="xl"
-                fontWeight="semibold"
-                className={raleway.className}
-                _groupHover={{ fontWeight: "bold" }}
-                display="flex"
-                flexDir="row"
-                justifyContent="space-between"
+            {manualPortfolios.map((portfolio) => (
+              <Card.Root
+                key={portfolio.name}
+                borderRadius="xl"
+                _hover={{ bg: "blue.100" }}
+                className="group"
+                backgroundColor="blue.50"
               >
-                <Text>My Portfolio 1</Text>
-                <FaArrowRight className="text-blue-500 cursor-pointer" />
-              </Card.Header>
-              <Card.Body
-                display="flex"
-                flexDir="row"
-                justifyContent={"space-between"}
-                _groupHover={{ fontWeight: "semibold" }}
-              >
-                <p />
-                <Text className={geistMono.className}>
-                  Current Estimated Value: $1000
-                </Text>
-              </Card.Body>
-            </Card.Root>
+                <Card.Header
+                  fontSize="lg"
+                  fontWeight="semibold"
+                  _groupHover={{ fontWeight: "bold" }}
+                  display="flex"
+                  flexDir="row"
+                  justifyContent="space-between"
+                >
+                  <Text className={quicksand.className}>{portfolio.name}</Text>
+                  <Link href={`/portfolio/manual-portfolio/${portfolio.name}`}>
+                    <FaArrowRight className="text-blue-500 cursor-pointer" />
+                  </Link>
+                </Card.Header>
+                <Card.Body
+                  display="flex"
+                  flexDir="row"
+                  justifyContent={"space-between"}
+                  _groupHover={{ fontWeight: "semibold" }}
+                >
+                  <p />
+                  <Text className={geistMono.className}>
+                    Current Estimated Value: ${portfolio.totalValue.toFixed(2)}
+                  </Text>
+                </Card.Body>
+              </Card.Root>
+            ))}
           </Card.Body>
           <Card.Footer display={"flex"} justifyContent={"center"}>
             <Button

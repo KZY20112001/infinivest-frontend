@@ -9,7 +9,7 @@ import {
 } from "@/app/api/robo-portfolio";
 import { raleway } from "@/app/fonts";
 
-import DisplayPortfolio from "@/app/portfolio/robo-portfolio/display-portfolio";
+import DisplayRoboPortfolio from "@/app/portfolio/robo-portfolio/display-robo-portfolio";
 
 export const metadata: Metadata = {
   title: "Infinivest | Robo-Portfolio",
@@ -22,7 +22,6 @@ const RoboPortfolio = async () => {
   if (!roboPortfolio || !roboPortfolioSummary) {
     redirect("/portfolio/robo-portfolio/create");
   }
-
   return (
     <Flex
       justifyContent={"center"}
@@ -39,7 +38,7 @@ const RoboPortfolio = async () => {
       >
         Robo-Advised Portfolio Details
       </Text>
-      <DisplayPortfolio
+      <DisplayRoboPortfolio
         roboPortfolio={roboPortfolio}
         roboPortfolioSummary={roboPortfolioSummary}
       />

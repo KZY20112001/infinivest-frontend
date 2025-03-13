@@ -12,6 +12,15 @@ export type ManualPortfolio = {
   totalCash: number;
 };
 
-export type ManualPortfoliosResponse = {
-  portfolios: ManualPortfolio[];
+export type ManualPortfolioResponse = {
+  portfolio: ManualPortfolio;
+};
+
+export type ManualPortfolioSummary = {
+  name: string;
+  totalValue: number;
+};
+
+export type ManualPortfoliosSummariesResponse = {
+  portfolios: ManualPortfolioSummary[];
 };

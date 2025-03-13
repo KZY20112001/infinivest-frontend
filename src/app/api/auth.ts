@@ -13,6 +13,7 @@ export async function signIn(
       body: JSON.stringify({ email, password }),
     });
 
+    console.log(response);
     if (!response) return false;
     const cookieStore = await cookies();
     cookieStore.set("access_token", response.tokens.accessToken, {

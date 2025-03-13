@@ -1,11 +1,12 @@
+"use client";
 import { FC, useState } from "react";
-import { Flex, List, Text } from "@chakra-ui/react";
 
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-} from "@/components/ui/accordion";
+import ClipLoader from "react-spinners/ClipLoader";
+import { Card, Flex, List, Text } from "@chakra-ui/react";
+import { BsInfoCircle } from "react-icons/bs";
+
+import { quicksand, raleway } from "@/app/fonts";
+import AdjustCash from "@/app/portfolio/manual-portfolio/[slug]/adjust-cash";
 import {
   DialogActionTrigger,
   DialogBody,
@@ -17,94 +18,145 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { quicksand, raleway } from "@/app/fonts";
 import {
-  ROBO_CATEGORY,
-  RoboPortfolioAsset,
-  RoboPortfolioCategory,
-} from "@/types/robo-portfolio";
+  ManualPortfolio,
+  ManualPortfolioAsset,
+} from "@/types/manual-portfolio";
 import { AssetPriceHistory } from "@/types/asset";
 import {
   fetchAssetDescription,
   fetchAssetHistory,
   fetchAssetPrice,
 } from "@/app/api/assets";
-import ClipLoader from "react-spinners/ClipLoader";
 import PriceChart from "@/app/portfolio/price-chart";
+import { Button } from "@/components/ui/button";
+import { Tooltip } from "@/components/ui/tooltip";
 
-interface DisplayCategoryProps {
-  category: RoboPortfolioCategory;
+interface DisplayManualPorfolioProps {
+  manualPortfolio: ManualPortfolio;
+  totalValue: number;
 }
-
-const ROBO_CATEGORY_DESCRIPTIONS: Record<ROBO_CATEGORY, string> = {
-  large_cap_blend:
-    "Large-cap stocks are typically well-established companies with stable earnings. This category blends these stocks to offer growth with stability, often focusing on blue-chip companies.",
-  small_cap_blend:
-    "Small-cap stocks are known for their growth potential, though they come with higher risk. This category mixes various small-cap stocks from emerging and innovative sectors.",
-  international_stocks:
-    "International stocks are shares in companies outside the home country, providing exposure to global growth opportunities. Investing in this category offers diversification across different markets.",
-  emerging_markets:
-    "Emerging markets consist of stocks from developing economies with high growth potential. However, they carry higher risks due to political instability and economic volatility.",
-  intermediate_bonds:
-    "Intermediate bonds have a maturity period ranging from 5 to 10 years, providing a balance between risk and return. These bonds tend to offer more stability than long-term bonds while yielding higher returns than short-term bonds.",
-  international_bonds:
-    "International bonds are debt securities issued by foreign governments or corporations. They offer the opportunity to diversify risk by holding bonds from various economies with different interest rate environments.",
-};
-
-const DisplayCategory: FC<DisplayCategoryProps> = ({ category }) => {
+const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
+  manualPortfolio,
+  totalValue,
+}) => {
   return (
-    <AccordionItem
-      key={category.name}
-      value={category.name}
-      borderBottomWidth={1}
-      borderColor="black"
-      pb="2"
-    >
-      <AccordionItemTrigger fontSize="md" fontWeight={"bold"} display="flex">
-        <Text className={raleway.className} w="48" fontSize="lg">
-          {category.name
-            .replace(/_/g, " ")
-            .toLowerCase()
-            .replace(/\b\w/g, (char) => char.toUpperCase())}
-        </Text>
-        <Text className={quicksand.className}>
-          {category.totalPercentage} %
-        </Text>
-      </AccordionItemTrigger>
-      <AccordionItemContent
-        className={raleway.className}
-        display={"flex"}
-        flexDir="column"
-        gap="8"
+    <Card.Root width="60%">
+      <Card.Header
+        className={quicksand.className}
+        fontSize="2xl"
+        fontWeight={"bold"}
+        borderBottomWidth="2px"
+        borderColor="gray.400"
+        pb="4"
       >
-        <Text fontSize="md" fontWeight="md">
-          {ROBO_CATEGORY_DESCRIPTIONS[category.name as ROBO_CATEGORY]}
-        </Text>
-        {category.assets.length > 0 ? (
-          <>
-            <Text className={quicksand.className} fontWeight={"semibold"}>
-              Estimated Value: ${category.totalAmount.toFixed(2)}
+        Summary
+      </Card.Header>
+      <Card.Body display="flex" flexDir="column" gap="8">
+        <Flex
+          pb="6"
+          borderWidth={1}
+          borderColor="black"
+          borderRadius="xl"
+          px="4"
+          py="2"
+          bgColor="blue.50"
+          fontWeight={"bold"}
+          flexDir="column"
+          gap="6"
+        >
+          <Flex gap="2" py="4">
+            <Text w="48" className={raleway.className}>
+              Estimated Total Value:
             </Text>
-            <List.Root display="flex" flexDir="row" gap="8" flexWrap={"wrap"}>
-              {category.assets.map((asset) => (
-                <Asset asset={asset} key={asset.symbol} />
-              ))}
-            </List.Root>
-          </>
-        ) : (
-          <Text fontWeight={"semibold"}>
-            Currently no assets allocated in this category
+            <Text className={quicksand.className}>
+              ${totalValue.toFixed(2)}
+            </Text>
+          </Flex>
+          <AdjustCash name={manualPortfolio.name} />
+        </Flex>
+
+        <Flex
+          pb="6"
+          flexDirection="column"
+          gap="2"
+          borderWidth={1}
+          borderColor="black"
+          borderRadius="xl"
+          px="4"
+          py="2"
+          bgColor="green.50"
+        >
+          <Flex className={quicksand.className} alignItems={"center"} gap="2">
+            <Text fontWeight="bold" fontSize="xl">
+              Liquid Cash
+            </Text>
+            <Tooltip content="Liquid cash is the amount of buffer money put aside as a buffer">
+              <BsInfoCircle
+                color="black"
+                size="20"
+                className="cursor-pointer"
+              />
+            </Tooltip>
+          </Flex>
+          <Flex
+            fontSize="md"
+            fontWeight={"semibold"}
+            gap="4"
+            alignItems={"center"}
+          >
+            <Text w="48" className={raleway.className}>
+              Currently Available:
+            </Text>
+            <Text
+              px="8"
+              borderRadius="xl"
+              py="1"
+              fontSize="lg"
+              className={quicksand.className}
+            >
+              $ {manualPortfolio.totalCash.toFixed(2)}
+            </Text>
+          </Flex>
+        </Flex>
+        <Flex
+          flexDirection="column"
+          gap="4"
+          borderWidth={1}
+          borderColor="black"
+          borderRadius="xl"
+          px="4"
+          py="2"
+          bgColor="blue.50"
+        >
+          <Text
+            fontWeight="bold"
+            fontSize="xl"
+            className={quicksand.className}
+            borderBottomWidth={1}
+            borderColor="gray.400"
+            pb="3"
+          >
+            Assets
           </Text>
-        )}
-      </AccordionItemContent>
-    </AccordionItem>
+          <List.Root
+            display="flex"
+            flexDir="row"
+            gap={12}
+            p={4}
+            flexWrap={"wrap"}
+          >
+            {manualPortfolio.assets.map((asset) => (
+              <Asset asset={asset} key={asset.name} />
+            ))}
+          </List.Root>
+        </Flex>
+      </Card.Body>
+    </Card.Root>
   );
 };
 
-const Asset: FC<{
-  asset: RoboPortfolioAsset;
-}> = ({ asset }) => {
+const Asset = ({ asset }: { asset: ManualPortfolioAsset }) => {
   const [desc, setDesc] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [latestPrice, setLatestPrice] = useState(0);
@@ -142,7 +194,7 @@ const Asset: FC<{
             <Flex
               w="100%"
               justifyContent={"flex-start"}
-              fontSize="md"
+              fontSize="lg"
               className={raleway.className}
               borderBottomWidth={2}
               borderColor="gray.400"
@@ -194,15 +246,7 @@ const Asset: FC<{
                   {desc}
                 </Text>
               )}
-              <Flex
-                gap="2"
-                fontSize="md"
-                className={quicksand.className}
-                fontWeight="semibold"
-              >
-                <Text w="40">Target Allocation: </Text>
-                <Text>{asset.percentage.toFixed(2)} %</Text>
-              </Flex>
+
               <Flex
                 gap="2"
                 fontSize="md"
@@ -231,7 +275,7 @@ const Asset: FC<{
                 className={quicksand.className}
                 fontWeight="semibold"
               >
-                <Text w="40">Average Price: </Text>
+                <Text w="40">Average Price:</Text>
                 {isLoading ? (
                   <ClipLoader size={25} />
                 ) : (
@@ -282,4 +326,4 @@ const Asset: FC<{
   );
 };
 
-export default DisplayCategory;
+export default DisplayManualPorfolio;
