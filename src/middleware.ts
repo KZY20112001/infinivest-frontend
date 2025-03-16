@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
+
+import { PUBLIC_ROUTES } from "@/config";
 export interface DecodedToken {
   exp?: number;
   [key: string]: unknown;
@@ -23,11 +25,9 @@ export function checkExpiry(token: string): boolean {
   }
 }
 
-const publicRoutes = ["/signin", "/signup", "/forgotpassword"];
-
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isPublicRoute = publicRoutes.includes(path);
+  const isPublicRoute = PUBLIC_ROUTES.includes(path);
   if (isPublicRoute) return NextResponse.next();
 
   const accessToken = (await cookies()).get("access_token")?.value;
