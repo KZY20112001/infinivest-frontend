@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 
 import { PiFinnTheHuman } from "react-icons/pi";
 import { IoClose, IoSend } from "react-icons/io5";
+import ReactMarkdown from "react-markdown";
 
 import {
   Box,
@@ -18,28 +19,28 @@ import {
 } from "@chakra-ui/react";
 import { quicksand, raleway } from "@/app/fonts";
 import { fetchProfile } from "@/app/api/profile";
-import { RoboPortfolio } from "@/types/robo-portfolio";
-import { Profile } from "@/types/profile";
-import { ManualPortfolio } from "@/types/manual-portfolio";
+import { Message, QueryContext } from "@/types/chat";
 import { fetchRoboPortfolio } from "@/app/api/robo-portfolio";
 import { fetchManualPortfolio } from "@/app/api/manual-portfolio";
+import { getReply } from "@/app/api/chat";
 
 interface ChatWindowProps {
   onClose: () => void;
   isOpen: boolean;
 }
 
-type Message = { role: "user" | "assistant"; content: string };
-
-type QueryContext = {
-  profile?: Profile;
-  roboPortfolio?: RoboPortfolio;
-  manualPortfolio?: ManualPortfolio;
+const introMessage = {
+  role: "assistant",
+  content: "Hi! I am Infini-Assistant. How can I help you today?",
 };
+
 const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
   const pathname = usePathname();
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    introMessage as Message,
+  ]);
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -60,18 +61,20 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+    const userMessage: Message = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+
     const additionalContext: QueryContext = {};
     const userProfile = await fetchProfile();
+
     if (userProfile) additionalContext.profile = userProfile;
+
     if (pathname.includes("/robo-portfolio")) {
       const roboPortfolioData = await fetchRoboPortfolio();
       if (roboPortfolioData)
         additionalContext.roboPortfolio = roboPortfolioData;
     } else if (pathname.includes("/manual-portfolio")) {
       const segments = pathname?.split("/");
-
-      // If the URL ends with /update, get the second-to-last segment
-      // Otherwise, get the last segment
       const portfolioName =
         segments?.[
           segments.length - (segments[segments.length - 1] === "update" ? 2 : 1)
@@ -80,27 +83,25 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
       const manualPortfolio = await fetchManualPortfolio(portfolioName!);
       if (manualPortfolio) additionalContext.manualPortfolio = manualPortfolio;
     }
-    console.log(additionalContext);
-    const userMessage: Message = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
 
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "TEST RESPONSE" },
-      ]);
-    }, 500);
+    setInput("");
+    setIsLoading(true);
+    const response = await getReply(
+      input,
+      Object.keys(additionalContext).length ? additionalContext : undefined
+    );
+    setMessages((prev) => [...prev, { role: "assistant", content: response }]);
+    setIsLoading(false);
   };
 
   return (
     <Flex
       position="absolute"
-      bottom={isOpen ? "3.5rem" : "-35rem"}
+      bottom={isOpen ? "3.5rem" : "-50rem"}
       right="0"
-      w="25rem"
+      w="30rem"
       minH="20rem"
-      maxH="30rem"
+      maxH="50rem"
       bg="white"
       boxShadow="xl"
       borderRadius="lg"
@@ -112,7 +113,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
     >
       <HStack gap={8}>
         <Text fontWeight="semibold" color="black" className={raleway.className}>
-          InfiniAssistant
+          Infini-Assistant
         </Text>
         <Text
           fontWeight="normal"
@@ -124,7 +125,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
           py="1"
           className={raleway.className}
           _hover={{ cursor: "pointer" }}
-          onClick={() => setMessages([])}
+          onClick={() => setMessages([introMessage as Message])}
         >
           Clear Messages
         </Text>
@@ -162,20 +163,18 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
               py={2}
               borderRadius="lg"
               maxW="85%"
+              className={quicksand.className}
             >
-              <Text
-                fontSize="md"
-                fontWeight="normal"
-                lineHeight={2}
-                className={quicksand.className}
-              >
-                {msg.content}
-              </Text>
+              {/* <Text fontSize="md" fontWeight="normal" lineHeight={2}> */}
+              <ReactMarkdown>{msg.content}</ReactMarkdown>
+              {/* </Text> */}
             </Box>
           </HStack>
         ))}
         <div ref={messagesEndRef} />
+        {isLoading && <TypingIndicator />}
       </VStack>
+
       <HStack>
         <Input
           placeholder="Type your message..."
@@ -192,5 +191,47 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
     </Flex>
   );
 };
+
+const TypingIndicator = () => (
+  <Box
+    display="flex"
+    alignItems="center"
+    gap="1"
+    ml="3"
+    px={3}
+    py={2}
+    bg="gray.200"
+    borderRadius="lg"
+    w="3rem"
+  >
+    <Box
+      w="6px"
+      h="6px"
+      bg="gray.500"
+      borderRadius="full"
+      animation="bounce 1s infinite alternate"
+    />
+    <Box
+      w="6px"
+      h="6px"
+      bg="gray.500"
+      borderRadius="full"
+      animation="bounce 1s infinite alternate 0.2s"
+    />
+    <Box
+      w="6px"
+      h="6px"
+      bg="gray.500"
+      borderRadius="full"
+      animation="bounce 1s infinite alternate 0.4s"
+    />
+    <style>{`
+      @keyframes bounce {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-5px); }
+      }
+    `}</style>
+  </Box>
+);
 
 export default ChatWindow;
