@@ -93,3 +93,79 @@ export async function withdrawMoneyFromManualPortfolio(
     return null;
   }
 }
+
+export async function createManualPortfolio(name: string): Promise<boolean> {
+  try {
+    const response = await backendClient<{ message: string }>(
+      `/portfolio/manual-portfolio/`,
+      {
+        method: "POST",
+        body: JSON.stringify({ name }),
+      }
+    );
+    return response?.message ? true : false;
+  } catch (error) {
+    console.error("Failed to create manual portfolio", error);
+    return false;
+  }
+}
+
+export async function updateManualPortfolio(
+  oldName: string,
+  newName: string
+): Promise<boolean> {
+  try {
+    const response = await backendClient<{ message: string }>(
+      `/portfolio/manual-portfolio/${oldName}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ name: newName }),
+      }
+    );
+    return response?.message ? true : false;
+  } catch (error) {
+    console.error("Failed to update manual portfolio", error);
+    return false;
+  }
+}
+
+export async function buyAsset(
+  portfolioName: string,
+  symbol: string,
+  name: string,
+  sharesAmount: number
+): Promise<boolean> {
+  try {
+    const response = await backendClient<boolean>(
+      `/portfolio/manual-portfolio/${portfolioName}/buy`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ symbol, name, sharesAmount }),
+      }
+    );
+    return response ? response : false;
+  } catch (error) {
+    console.error("Failed to buy asset", error);
+    return false;
+  }
+}
+
+export async function sellAsset(
+  portfolioName: string,
+  symbol: string,
+  sharesAmount: number
+) {
+  try {
+    const response = await backendClient<boolean>(
+      `/portfolio/manual-portfolio/${portfolioName}/sell`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ symbol, sharesAmount }),
+      }
+    );
+    return response ? response : false;
+  } catch (error) {
+    console.error("Failed to sell asset", error);
+    return false;
+  }
+}

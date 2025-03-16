@@ -20,15 +20,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { quicksand, raleway } from "@/app/fonts";
 import {
-  ROBO_CATEGORY,
   RoboPortfolioAsset,
+  ROBO_CATEGORY,
   RoboPortfolioCategory,
 } from "@/types/robo-portfolio";
 import { AssetPriceHistory } from "@/types/asset";
 import {
-  fetchAssetDescription,
-  fetchAssetHistory,
-  fetchAssetPrice,
+  getAssetDescription,
+  getAssetHistory,
+  getAssetPrice,
 } from "@/app/api/assets";
 import ClipLoader from "react-spinners/ClipLoader";
 import PriceChart from "@/app/portfolio/price-chart";
@@ -112,9 +112,9 @@ const Asset: FC<{
   const fetch = async () => {
     setIsLoading(true);
     const [desc, latestPrice, history] = await Promise.all([
-      fetchAssetDescription(asset.symbol),
-      fetchAssetPrice(asset.symbol),
-      fetchAssetHistory(asset.symbol),
+      getAssetDescription(asset.symbol),
+      getAssetPrice(asset.symbol),
+      getAssetHistory(asset.symbol),
     ]);
 
     setDesc(desc);

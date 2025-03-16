@@ -12,7 +12,6 @@ export type RoboPortfolioAsset = {
   percentage: number;
 
   sharesOwned: number;
-
   totalInvested: number;
   avgBuyPrice: number;
 };

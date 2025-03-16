@@ -24,9 +24,9 @@ import {
 } from "@/types/manual-portfolio";
 import { AssetPriceHistory } from "@/types/asset";
 import {
-  fetchAssetDescription,
-  fetchAssetHistory,
-  fetchAssetPrice,
+  getAssetDescription,
+  getAssetHistory,
+  getAssetPrice,
 } from "@/app/api/assets";
 import PriceChart from "@/app/portfolio/price-chart";
 import { Button } from "@/components/ui/button";
@@ -73,7 +73,10 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
               ${totalValue.toFixed(2)}
             </Text>
           </Flex>
-          <AdjustCash name={manualPortfolio.name} />
+          <AdjustCash
+            name={manualPortfolio.name}
+            liquidCash={manualPortfolio.totalCash}
+          />
         </Flex>
 
         <Flex
@@ -164,9 +167,9 @@ const Asset = ({ asset }: { asset: ManualPortfolioAsset }) => {
   const fetch = async () => {
     setIsLoading(true);
     const [desc, latestPrice, history] = await Promise.all([
-      fetchAssetDescription(asset.symbol),
-      fetchAssetPrice(asset.symbol),
-      fetchAssetHistory(asset.symbol),
+      getAssetDescription(asset.symbol),
+      getAssetPrice(asset.symbol),
+      getAssetHistory(asset.symbol),
     ]);
 
     setDesc(desc);

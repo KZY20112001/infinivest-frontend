@@ -1,5 +1,5 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Flex, Text, Input } from "@chakra-ui/react";
@@ -25,14 +25,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { InputGroup } from "@/components/ui/input-group";
 
-const AdjustCash = ({ name }: { name: string }) => {
+const AdjustCash = ({
+  name,
+  liquidCash,
+}: {
+  name: string;
+  liquidCash: number;
+}) => {
   const router = useRouter();
   const [amount, setAmount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
   const [amountWithdrawn, setAmountWithdrawn] = useState(0);
 
-  const isMutating = isLoading || isPending;
   const addMoney = async () => {
     setIsLoading(true);
     const isSuccessful = await addMoneyToManualPortfolio(name, amount);
@@ -42,10 +46,8 @@ const AdjustCash = ({ name }: { name: string }) => {
     } else {
       toast("Failed to add money");
     }
-    startTransition(() => {
-      router.refresh();
-    });
     setIsLoading(false);
+    router.refresh();
   };
 
   const withDrawMoney = async () => {
@@ -59,15 +61,17 @@ const AdjustCash = ({ name }: { name: string }) => {
     } else {
       toast("Failed to withdraw money");
     }
-    startTransition(() => {
-      router.refresh();
-    });
     setIsLoading(false);
+    router.refresh();
   };
   return (
     <Flex gap="8" justifyContent={"center"}>
       <ToastContainer />
-      <DialogRoot>
+      <DialogRoot
+        onExitComplete={() => {
+          setAmount(0);
+        }}
+      >
         <DialogTrigger asChild>
           <Button
             fontWeight={"semibold"}
@@ -150,15 +154,20 @@ const AdjustCash = ({ name }: { name: string }) => {
               w="28"
               borderRadius={"lg"}
               onClick={addMoney}
-              disabled={isMutating || amount === 0}
+              disabled={isLoading || amount === 0}
             >
-              {isMutating ? <ClipLoader size={25} /> : "Add"}
+              {isLoading ? <ClipLoader size={25} /> : "Add"}
             </Button>
           </DialogFooter>
           <DialogCloseTrigger />
         </DialogContent>
       </DialogRoot>
-      <DialogRoot onExitComplete={() => setAmountWithdrawn(0)}>
+      <DialogRoot
+        onExitComplete={() => {
+          setAmountWithdrawn(0);
+          setAmount(0);
+        }}
+      >
         <DialogTrigger asChild>
           <Button
             fontWeight={"semibold"}
@@ -207,7 +216,7 @@ const AdjustCash = ({ name }: { name: string }) => {
                   value={amount}
                   onChange={(e) => setAmount(Number(e.target.value))}
                   min="0"
-                  max="1000000"
+                  max={liquidCash}
                   width={40}
                   height={8}
                   fontSize="lg"
@@ -247,9 +256,9 @@ const AdjustCash = ({ name }: { name: string }) => {
               w="28"
               borderRadius={"lg"}
               onClick={withDrawMoney}
-              disabled={isMutating || amount === 0}
+              disabled={isLoading || amount === 0}
             >
-              {isMutating ? <ClipLoader size={25} /> : "Withdraw"}
+              {isLoading ? <ClipLoader size={25} /> : "Withdraw"}
             </Button>
           </DialogFooter>
           <DialogCloseTrigger />

@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 const Portfolio = async () => {
   const roboPortfolioSummary = await fetchRoboPortfolioSummary();
   const manualPortfolios = await fetchManualPortfolios();
-  console.log(manualPortfolios);
   return (
     <Flex
       justifyContent={"center"}
