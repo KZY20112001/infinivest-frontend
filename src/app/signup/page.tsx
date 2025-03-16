@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { quicksand } from "@/app/fonts";
-import { SignUpForm } from "@/components/form";
+import SignUpForm from "@/app/signup/signup-form";
 
 import { Flex, Text } from "@chakra-ui/react";
 

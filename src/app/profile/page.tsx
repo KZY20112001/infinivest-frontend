@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { fetchProfile } from "@/app/api/profile";
-import ProfileCard from "@/components/card/profile";
+import ProfileCard from "@/app/profile/profile-card";
 
 export const metadata: Metadata = {
   title: "Profile",

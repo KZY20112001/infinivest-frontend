@@ -71,7 +71,6 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
       const imageUrl = uploadUrl.split("?")[0];
       const profileUrl = `${imageUrl}?t=${new Date().getTime()}`; // Add a timestamp to bypass cache
 
-      console.log(imageUrl);
       setCurProfile((prev) => ({
         ...prev,
         profileUrl,
@@ -116,8 +115,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
           position="relative"
         >
           <Link href="/profile">
-            <Button position="absolute" left="0">
-              <FaArrowLeft />
+            <Button position="absolute" left="4">
+              <FaArrowLeft className="text-blue-500 cursor-pointer" />
             </Button>
           </Link>
           <Text

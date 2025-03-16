@@ -46,7 +46,7 @@ const SignInForm = () => {
       const isSuccessful = await signIn(values.email, values.password);
       if (isSuccessful) {
         toast("Successful");
-        router.push("/profile");
+        router.push("/portfolio");
       } else {
         toast("Wrong Credentials");
       }
@@ -132,8 +132,27 @@ const SignInForm = () => {
             </FormHelperText>
           )}
         </FormControl>
-
-        <Flex justifyContent="space-between" width="full" mb="6">
+        <Flex justifyContent="center" width="full" mb="6">
+          <Button
+            type="submit"
+            background="teal"
+            borderRadius="xl"
+            px="10"
+            py="6"
+            className={quicksand.className}
+            backgroundColor="white"
+            fontWeight="semibold"
+            color={"black"}
+            fontSize="xl"
+            _hover={{
+              backgroundColor: "gray.100",
+              fontWeight: "extrabold",
+            }}
+          >
+            Login
+          </Button>
+        </Flex>
+        <Flex justifyContent="space-between" width="full">
           <ChakraLink asChild>
             <NextLink href="/signup">
               <Button
@@ -178,26 +197,6 @@ const SignInForm = () => {
               </Button>
             </NextLink>
           </ChakraLink>
-        </Flex>
-        <Flex justifyContent="center" width="full">
-          <Button
-            type="submit"
-            background="teal"
-            borderRadius="xl"
-            px="10"
-            py="6"
-            className={quicksand.className}
-            backgroundColor="white"
-            fontWeight="semibold"
-            color={"black"}
-            fontSize="xl"
-            _hover={{
-              backgroundColor: "gray.100",
-              fontWeight: "extrabold",
-            }}
-          >
-            Login
-          </Button>
         </Flex>
       </form>
       <ToastContainer />

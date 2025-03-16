@@ -1,6 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
-import { apiClient } from "@/app/api/client";
+import { backendClient } from "@/app/api/client";
 import { AuthResponse } from "@/types/auth";
 
 export async function signIn(
@@ -8,15 +8,15 @@ export async function signIn(
   password: string
 ): Promise<boolean> {
   try {
-    const response = await apiClient<AuthResponse>("/user/signin", {
+    const response = await backendClient<AuthResponse>("/user/signin", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
 
+    console.log(response);
     if (!response) return false;
-
     const cookieStore = await cookies();
-    cookieStore.set("access_token", response.tokens.access_token, {
+    cookieStore.set("access_token", response.tokens.accessToken, {
       path: "/",
       maxAge: 3 * 60 * 60,
       secure: true,
@@ -24,7 +24,7 @@ export async function signIn(
       sameSite: true,
     });
 
-    cookieStore.set("refresh_token", response.tokens.refresh_token, {
+    cookieStore.set("refresh_token", response.tokens.refreshToken, {
       path: "/",
       maxAge: 8 * 60 * 60,
       secure: true,
@@ -40,14 +40,14 @@ export async function signIn(
 
 export async function signUp(email: string, password: string) {
   try {
-    const response = await apiClient<AuthResponse>("/user/signup", {
+    const response = await backendClient<AuthResponse>("/user/signup", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
     if (!response) return false;
 
     const cookieStore = await cookies();
-    cookieStore.set("access_token", response.tokens.access_token, {
+    cookieStore.set("access_token", response.tokens.accessToken, {
       path: "/",
       maxAge: 3 * 60 * 60,
       secure: true,
@@ -55,7 +55,7 @@ export async function signUp(email: string, password: string) {
       sameSite: true,
     });
 
-    cookieStore.set("refresh_token", response.tokens.refresh_token, {
+    cookieStore.set("refresh_token", response.tokens.refreshToken, {
       path: "/",
       maxAge: 8 * 60 * 60,
       secure: true,

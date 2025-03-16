@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { geistMono, geistSans, open_sans, quicksand, raleway } from "./fonts";
+import { geistMono, open_sans, quicksand, raleway } from "./fonts";
 import { Provider } from "@/components/ui/provider";
 import { Box } from "@chakra-ui/react";
 
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${raleway.variable} ${open_sans.variable} ${quicksand.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${raleway.variable} ${open_sans.variable} ${quicksand.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>
           <Box minH={"100vh"} w={"100vw"} background="#d2e7e7ec">

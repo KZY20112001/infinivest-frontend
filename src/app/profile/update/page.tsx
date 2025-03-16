@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Flex } from "@chakra-ui/react";
 import { fetchProfile } from "@/app/api/profile";
-import { ProfileForm } from "@/components/form";
+import ProfileForm from "@/app/profile/update/profile-form";
 
 export const metadata: Metadata = {
   title: "Profile",
