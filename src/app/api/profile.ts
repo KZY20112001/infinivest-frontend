@@ -19,11 +19,15 @@ export async function createProfile(profile: Profile): Promise<boolean> {
     const req = {
       first_name: profile.firstName,
       last_name: profile.lastName,
-      address: profile.address,
       profile_url: profile.profileUrl,
       profile_id: profile.profileID,
+      risk_tolerance: profile.riskTolerance,
+      investment_style: profile.investmentStyle,
+      investment_horizon: profile.investmentHorizon,
+      annual_income: Number(profile.annualIncome),
+      experience_level: profile.experienceLevel,
     };
-    const response = await backendClient<{ message: string }>("/profile", {
+    const response = await backendClient<{ message: string }>("/profile/", {
       method: "POST",
       body: JSON.stringify(req),
     });
@@ -40,9 +44,13 @@ export async function updateProfile(profile: Profile): Promise<boolean> {
     const req = {
       first_name: profile.firstName,
       last_name: profile.lastName,
-      address: profile.address,
       profile_url: profile.profileUrl,
       profile_id: profile.profileID,
+      risk_tolerance: profile.riskTolerance,
+      investment_style: profile.investmentStyle,
+      investment_horizon: profile.investmentHorizon,
+      annual_income: profile.annualIncome,
+      experience_level: profile.experienceLevel,
     };
     const response = await backendClient<{ message: string }>("/profile", {
       method: "PATCH",
