@@ -2,7 +2,7 @@
 import { backendClient } from "@/app/api/client";
 import { Profile, ProfileResponse } from "@/types/profile";
 
-export async function fetchProfile(): Promise<Profile | null> {
+export async function getProfile(): Promise<Profile | null> {
   try {
     const response = await backendClient<ProfileResponse>("/profile", {
       method: "GET",

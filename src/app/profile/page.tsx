@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { fetchProfile } from "@/app/api/profile";
+import { getProfile } from "@/app/api/profile";
 import ProfileCard from "@/app/profile/profile-card";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const Profile = async () => {
-  const profile = await fetchProfile();
+  const profile = await getProfile();
   if (!profile) {
     redirect("/profile/update");
   }

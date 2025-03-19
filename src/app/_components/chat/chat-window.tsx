@@ -18,7 +18,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { quicksand, raleway } from "@/app/fonts";
-import { fetchProfile } from "@/app/api/profile";
+import { getProfile } from "@/app/api/profile";
 import { Message, QueryContext } from "@/types/chat";
 import { fetchRoboPortfolio } from "@/app/api/robo-portfolio";
 import { fetchManualPortfolio } from "@/app/api/manual-portfolio";
@@ -65,7 +65,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
     setMessages((prev) => [...prev, userMessage]);
 
     const additionalContext: QueryContext = {};
-    const userProfile = await fetchProfile();
+    const userProfile = await getProfile();
 
     if (userProfile) additionalContext.profile = userProfile;
 
@@ -100,7 +100,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
       bottom={isOpen ? "3.5rem" : "-50rem"}
       right="0"
       w="30rem"
-      minH="20rem"
+      minH="30rem"
       maxH="50rem"
       bg="white"
       boxShadow="xl"
