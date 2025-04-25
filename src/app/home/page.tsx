@@ -41,7 +41,7 @@ const Home = async () => {
             <Avatar
               size="2xl"
               src={
-                profile
+                profile && profile.profileUrl !== ""
                   ? profile.profileUrl ?? "/profile-placeholder.jpg"
                   : "/default-profile.png"
               }

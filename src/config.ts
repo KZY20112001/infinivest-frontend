@@ -1,1 +1,1 @@
-export const PUBLIC_ROUTES = ["/signin", "/signup", "/forgotpassword"];
+export const PUBLIC_ROUTES = ["/", "/signin", "/signup", "/forgotpassword"];

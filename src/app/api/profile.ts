@@ -49,7 +49,7 @@ export async function updateProfile(profile: Profile): Promise<boolean> {
       risk_tolerance: profile.riskTolerance,
       investment_style: profile.investmentStyle,
       investment_horizon: profile.investmentHorizon,
-      annual_income: profile.annualIncome,
+      annual_income: Number(profile.annualIncome),
       experience_level: profile.experienceLevel,
     };
     const response = await backendClient<{ message: string }>("/profile", {

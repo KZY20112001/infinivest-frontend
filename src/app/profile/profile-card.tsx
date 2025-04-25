@@ -53,7 +53,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
         <Card.Body width="full" fontSize="xl">
           <Flex gap="20">
             <Image
-              src={profile.profileUrl ?? "/profile-placeholder.png"}
+              src={
+                profile && profile.profileUrl !== ""
+                  ? profile.profileUrl
+                  : "/profile-placeholder.jpg"
+              }
               alt="profile picture"
               boxSize="250px"
               fit="cover"

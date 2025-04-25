@@ -8,6 +8,7 @@ import {
   getAssetsByKeyword,
   getAssetDescription,
   getAssetPrice,
+  getAssetHistory,
 } from "@/app/api/assets";
 
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { InputGroup } from "@/components/ui/input-group";
 import { buyAsset } from "@/app/api/manual-portfolio";
 import { useRouter } from "next/navigation";
+import { AssetPriceHistory } from "@/types/asset";
+import PriceChart from "@/app/portfolio/price-chart";
 
 interface BuyAssetsProps {
   portfolioName: string;
@@ -134,16 +137,19 @@ const Asset = ({
   const [isLoading, setIsLoading] = useState(false);
   const [latestPrice, setLatestPrice] = useState(0);
   const [desc, setDesc] = useState("");
+  const [history, setHistory] = useState<AssetPriceHistory>([]);
 
   const [amount, setAmount] = useState(0);
   const fetch = async (symbol: string) => {
     setIsLoading(true);
-    const [price, desc] = await Promise.all([
+    const [price, desc, history] = await Promise.all([
       getAssetPrice(symbol),
       getAssetDescription(symbol),
+      getAssetHistory(symbol),
     ]);
     setLatestPrice(price);
     setDesc(desc);
+    setHistory(history);
     setIsLoading(false);
   };
 
@@ -302,6 +308,25 @@ const Asset = ({
               ) : (
                 <Text>${(amount * latestPrice).toFixed(2)}</Text>
               )}
+            </Flex>
+
+            <Flex
+              gap="8"
+              flexDir="column"
+              py="4"
+              px="2"
+              borderWidth="1px"
+              borderColor="black"
+              bgColor="blue.50"
+            >
+              <Text
+                fontSize="md"
+                className={quicksand.className}
+                fontWeight="semibold"
+              >
+                Historical Performance
+              </Text>
+              <PriceChart data={history} totalInvested={0} />
             </Flex>
           </DialogBody>
           <DialogFooter

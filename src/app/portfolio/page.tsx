@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { Card, Flex, Text, Button } from "@chakra-ui/react";
 
 import { fetchRoboPortfolioSummary } from "@/app/api/robo-portfolio";
-import { fetchManualPortfolios } from "@/app/api/manual-portfolio";
+import { getManualPortfolios } from "@/app/api/manual-portfolio";
 import { geistMono, quicksand, raleway } from "@/app/fonts";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const Portfolio = async () => {
   const roboPortfolioSummary = await fetchRoboPortfolioSummary();
-  const manualPortfolios = await fetchManualPortfolios();
+  const manualPortfolios = await getManualPortfolios();
   return (
     <Flex
       justifyContent={"center"}

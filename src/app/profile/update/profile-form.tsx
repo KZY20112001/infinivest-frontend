@@ -145,8 +145,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
             <Flex flexDir={"column"} alignItems={"center"} gap="4">
               <Image
                 src={
-                  curProfile?.profileUrl ??
-                  "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+                  curProfile?.profileUrl && curProfile?.profileUrl !== ""
+                    ? curProfile?.profileUrl
+                    : "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
                 }
                 alt="profile picture"
                 boxSize="250px"

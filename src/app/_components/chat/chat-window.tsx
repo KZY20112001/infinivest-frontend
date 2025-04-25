@@ -21,7 +21,7 @@ import { quicksand, raleway } from "@/app/fonts";
 import { getProfile } from "@/app/api/profile";
 import { Message, QueryContext } from "@/types/chat";
 import { fetchRoboPortfolio } from "@/app/api/robo-portfolio";
-import { fetchManualPortfolio } from "@/app/api/manual-portfolio";
+import { getManualPortfolio } from "@/app/api/manual-portfolio";
 import { getReply } from "@/app/api/chat";
 
 interface ChatWindowProps {
@@ -80,7 +80,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
           segments.length - (segments[segments.length - 1] === "update" ? 2 : 1)
         ]?.toLowerCase();
       console.log(portfolioName);
-      const manualPortfolio = await fetchManualPortfolio(portfolioName!);
+      const manualPortfolio = await getManualPortfolio(portfolioName!);
       if (manualPortfolio) additionalContext.manualPortfolio = manualPortfolio;
     }
 
