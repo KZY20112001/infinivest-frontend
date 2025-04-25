@@ -7,9 +7,7 @@ import {
   ManualPortfolioSummary,
 } from "@/types/manual-portfolio";
 
-export async function fetchManualPortfolios(): Promise<
-  ManualPortfolioSummary[]
-> {
+export async function getManualPortfolios(): Promise<ManualPortfolioSummary[]> {
   try {
     const response = await backendClient<ManualPortfoliosSummariesResponse>(
       "/portfolio/manual-portfolio/summaries",
@@ -24,7 +22,7 @@ export async function fetchManualPortfolios(): Promise<
   }
 }
 
-export async function fetchManualPortfolio(
+export async function getManualPortfolio(
   name: string
 ): Promise<ManualPortfolio | null> {
   try {
@@ -41,7 +39,7 @@ export async function fetchManualPortfolio(
   }
 }
 
-export async function fetchManualPortfolioValue(name: string): Promise<number> {
+export async function getManualPortfolioValue(name: string): Promise<number> {
   try {
     const response = await backendClient<{ amount: number }>(
       `/portfolio/manual-portfolio/${name}/value`,

@@ -5,6 +5,7 @@ import {
   updateProfile,
 } from "@/app/api/profile";
 import { quicksand, raleway } from "@/app/fonts";
+import { InputGroup } from "@/components/ui/input-group";
 import { Profile } from "@/types/profile";
 import { FormControl } from "@chakra-ui/form-control";
 import {
@@ -16,6 +17,7 @@ import {
   Separator,
   Text,
   Input,
+  NativeSelect,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -39,12 +41,20 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
   const [curProfile, setCurProfile] = useState<Profile>({
     firstName: profile?.firstName ?? "",
     lastName: profile?.lastName ?? "",
-    address: profile?.address ?? "",
     profileUrl: profile?.profileUrl,
     profileID: profile?.profileID,
+    riskTolerance: profile?.riskTolerance ?? "",
+    investmentStyle: profile?.investmentStyle ?? "",
+    investmentHorizon: profile?.investmentHorizon ?? "",
+    annualIncome: profile?.annualIncome ?? 0,
+    experienceLevel: profile?.experienceLevel ?? "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setCurProfile((prev) => ({
       ...prev,
@@ -100,7 +110,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
   return (
     <>
       <Card.Root
-        width="45%"
+        width="50%"
         h="full"
         display="flex"
         flexDir="column"
@@ -130,13 +140,14 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
         </Card.Header>
 
         <Separator borderColor="black" borderWidth="1px" />
-        <Card.Body width="full" fontSize="xl">
+        <Card.Body width="full" fontSize="lg">
           <Flex gap="20">
             <Flex flexDir={"column"} alignItems={"center"} gap="4">
               <Image
                 src={
-                  curProfile?.profileUrl ??
-                  "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+                  curProfile?.profileUrl && curProfile?.profileUrl !== ""
+                    ? curProfile?.profileUrl
+                    : "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
                 }
                 alt="profile picture"
                 boxSize="250px"
@@ -166,7 +177,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
               <FormControl display="flex" gap="4" alignItems={"center"}>
                 <Text
                   className={quicksand.className}
-                  w="40"
+                  w="60"
                   fontWeight={"bold"}
                 >
                   First Name
@@ -185,7 +196,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
               <FormControl display="flex" gap="4" alignItems={"center"}>
                 <Text
                   className={quicksand.className}
-                  w="40"
+                  w="60"
                   fontWeight={"bold"}
                 >
                   Last Name
@@ -201,24 +212,133 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
                 />
               </FormControl>
 
-              <FormControl display="flex" gap="4" alignItems={"center"}>
+              <FormControl display="flex" alignItems={"center"} gap={"1"}>
                 <Text
                   className={quicksand.className}
-                  w="40"
+                  w="60"
                   fontWeight={"bold"}
                 >
-                  Address
+                  Risk Tolerance
                 </Text>
-                <Input
-                  name="address"
-                  type="address"
-                  borderWidth="1px"
-                  p="1"
-                  value={curProfile.address}
-                  onChange={handleChange}
-                  placeholder="Enter your address"
+                <NativeSelect.Root w="60">
+                  <NativeSelect.Field
+                    className={quicksand.className}
+                    placeholder="Select"
+                    name="riskTolerance"
+                    borderWidth={1}
+                    borderColor="black"
+                    p="1"
+                    onChange={handleChange}
+                  >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
+              </FormControl>
+
+              <FormControl display="flex" alignItems={"center"} gap={"1"}>
+                <Text
                   className={quicksand.className}
-                />
+                  w="60"
+                  fontWeight={"bold"}
+                >
+                  Investment Style
+                </Text>
+                <NativeSelect.Root w="60">
+                  <NativeSelect.Field
+                    className={quicksand.className}
+                    placeholder="Select"
+                    name="investmentStyle"
+                    borderWidth={1}
+                    borderColor="black"
+                    p="1"
+                    onChange={handleChange}
+                  >
+                    <option value="Conservative">Conservative</option>
+                    <option value="Balanced">Balanced</option>
+                    <option value="Growth">Growth</option>
+                    <option value="Aggressive">Aggressive</option>
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
+              </FormControl>
+
+              <FormControl display="flex" alignItems={"center"} gap={"1"}>
+                <Text
+                  className={quicksand.className}
+                  w="60"
+                  fontWeight={"bold"}
+                >
+                  Investment Horizon
+                </Text>
+                <NativeSelect.Root w="60">
+                  <NativeSelect.Field
+                    className={quicksand.className}
+                    placeholder="Select"
+                    name="investmentHorizon"
+                    borderWidth={1}
+                    borderColor="black"
+                    p="1"
+                    onChange={handleChange}
+                  >
+                    <option value="Short Term">Short Term (0-3 years)</option>
+                    <option value="Medium Term">
+                      Medium Term (3-10 years)
+                    </option>
+                    <option value="Long Term">Long Term (10+ years)</option>
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
+              </FormControl>
+
+              <FormControl display="flex" alignItems={"center"} gap={"1"}>
+                <Text
+                  className={quicksand.className}
+                  w="60"
+                  fontWeight={"bold"}
+                >
+                  Experience Level
+                </Text>
+                <NativeSelect.Root w="60">
+                  <NativeSelect.Field
+                    className={quicksand.className}
+                    placeholder="Select"
+                    name="experienceLevel"
+                    borderWidth={1}
+                    borderColor="black"
+                    p="1"
+                    onChange={handleChange}
+                  >
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
+              </FormControl>
+
+              <FormControl display="flex" alignItems={"center"} gap={"1"}>
+                <Text
+                  className={quicksand.className}
+                  w="60"
+                  fontWeight={"bold"}
+                >
+                  Annual Income (Estimated)
+                </Text>
+                <InputGroup startElement="$">
+                  <Input
+                    name="annualIncome"
+                    type="number"
+                    borderWidth="1px"
+                    p="1"
+                    value={curProfile.annualIncome}
+                    onChange={handleChange}
+                    placeholder="Enter your annual income (estimated)"
+                    className={quicksand.className}
+                  />
+                </InputGroup>
               </FormControl>
             </Flex>
           </Flex>
@@ -239,7 +359,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
             fontWeight="bold"
             _hover={{ cursor: "pointer" }}
           >
-            Update Profile
+            {profile ? "Update Profile" : "Create Profile"}
           </Button>
         </Card.Footer>
       </Card.Root>

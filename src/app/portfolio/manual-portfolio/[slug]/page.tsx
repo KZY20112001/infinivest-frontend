@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import {
-  fetchManualPortfolio,
-  fetchManualPortfolioValue,
+  getManualPortfolio,
+  getManualPortfolioValue,
 } from "@/app/api/manual-portfolio";
 import { Flex, Text } from "@chakra-ui/react";
 import { raleway } from "@/app/fonts";
@@ -20,8 +20,8 @@ const ManualPortfolio = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-  const manualPortfolio = await fetchManualPortfolio(slug);
-  const totalValue = await fetchManualPortfolioValue(slug);
+  const manualPortfolio = await getManualPortfolio(slug);
+  const totalValue = await getManualPortfolioValue(slug);
   if (!manualPortfolio || totalValue === -1) {
     redirect("/portfolio");
   }

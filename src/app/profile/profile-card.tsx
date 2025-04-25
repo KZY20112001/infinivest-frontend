@@ -53,37 +53,141 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
         <Card.Body width="full" fontSize="xl">
           <Flex gap="20">
             <Image
-              src={profile.profileUrl}
+              src={
+                profile && profile.profileUrl !== ""
+                  ? profile.profileUrl
+                  : "/profile-placeholder.jpg"
+              }
               alt="profile picture"
               boxSize="250px"
               fit="cover"
             />
 
             <Flex direction={"column"} gap="4">
-              <Flex gap="4">
+              <Flex gap="4" alignItems="center">
                 <Text
                   className={quicksand.className}
-                  w="28"
+                  w="40"
                   fontWeight={"bold"}
                 >
                   Name :
                 </Text>
                 <Text
+                  borderRadius="lg"
+                  borderWidth={1}
+                  bgColor="blue.50"
+                  px="2"
+                  py="1"
                   className={quicksand.className}
                   textTransform={"capitalize"}
                 >
                   {profile.firstName} {profile.lastName}
                 </Text>
               </Flex>
-              <Flex gap="4">
+
+              <Flex gap="4" alignItems="center">
                 <Text
                   className={quicksand.className}
-                  w="28"
+                  w="40"
                   fontWeight={"bold"}
                 >
-                  Address :
+                  Risk Tolerance :
                 </Text>
-                <Text className={quicksand.className}>{profile.address}</Text>
+                <Text
+                  borderRadius="lg"
+                  borderWidth={1}
+                  bgColor="blue.50"
+                  px="2"
+                  py="1"
+                  className={quicksand.className}
+                  textTransform={"capitalize"}
+                >
+                  {profile.riskTolerance}
+                </Text>
+              </Flex>
+
+              <Flex gap="4" alignItems="center">
+                <Text
+                  className={quicksand.className}
+                  w="40"
+                  fontWeight={"bold"}
+                >
+                  Investment Style :
+                </Text>
+                <Text
+                  borderRadius="lg"
+                  borderWidth={1}
+                  bgColor="blue.50"
+                  px="2"
+                  py="1"
+                  className={quicksand.className}
+                  textTransform={"capitalize"}
+                >
+                  {profile.investmentStyle}
+                </Text>
+              </Flex>
+
+              <Flex gap="4" alignItems="center">
+                <Text
+                  className={quicksand.className}
+                  w="40"
+                  fontWeight={"bold"}
+                >
+                  Investment Horizon :
+                </Text>
+                <Text
+                  borderRadius="lg"
+                  borderWidth={1}
+                  bgColor="blue.50"
+                  px="2"
+                  py="1"
+                  className={quicksand.className}
+                  textTransform={"capitalize"}
+                >
+                  {profile.investmentHorizon}
+                </Text>
+              </Flex>
+
+              <Flex gap="4" alignItems="center">
+                <Text
+                  className={quicksand.className}
+                  w="40"
+                  fontWeight={"bold"}
+                >
+                  Annual Income :
+                </Text>
+                <Text
+                  borderRadius="lg"
+                  borderWidth={1}
+                  bgColor="blue.50"
+                  px="2"
+                  py="1"
+                  className={quicksand.className}
+                  textTransform={"capitalize"}
+                >
+                  ${profile.annualIncome}
+                </Text>
+              </Flex>
+
+              <Flex gap="4" alignItems="center">
+                <Text
+                  className={quicksand.className}
+                  w="40"
+                  fontWeight={"bold"}
+                >
+                  Experience Level :
+                </Text>
+                <Text
+                  borderRadius="lg"
+                  borderWidth={1}
+                  bgColor="blue.50"
+                  px="2"
+                  py="1"
+                  className={quicksand.className}
+                  textTransform={"capitalize"}
+                >
+                  {profile.experienceLevel}
+                </Text>
               </Flex>
             </Flex>
           </Flex>

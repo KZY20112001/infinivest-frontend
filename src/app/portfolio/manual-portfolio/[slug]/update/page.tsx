@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Flex, Text } from "@chakra-ui/react";
 
-import { fetchManualPortfolio } from "@/app/api/manual-portfolio";
+import { getManualPortfolio } from "@/app/api/manual-portfolio";
 import { raleway } from "@/app/fonts";
 import UpdateManualPortfolio from "@/app/portfolio/manual-portfolio/[slug]/update/update-manual-portfolio";
 import { redirect } from "next/navigation";
@@ -18,7 +18,7 @@ const UpdateManualPortfolioPage = async ({
 }) => {
   const { slug } = await params;
 
-  const manualPortfolio = await fetchManualPortfolio(slug);
+  const manualPortfolio = await getManualPortfolio(slug);
   if (!manualPortfolio) {
     redirect("/portfolio");
   }

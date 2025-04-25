@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Flex } from "@chakra-ui/react";
-import { fetchProfile } from "@/app/api/profile";
+import { getProfile } from "@/app/api/profile";
 import ProfileForm from "@/app/profile/update/profile-form";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const UpdateProfile = async () => {
-  const profile = await fetchProfile();
+  const profile = await getProfile();
   return (
     <Flex
       flexDirection={"column"}
