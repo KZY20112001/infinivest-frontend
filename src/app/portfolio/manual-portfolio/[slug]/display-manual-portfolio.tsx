@@ -1,9 +1,11 @@
 "use client";
+import Link from "next/link";
 import { FC, useState } from "react";
 
 import ClipLoader from "react-spinners/ClipLoader";
 import { Card, Flex, List, Text } from "@chakra-ui/react";
 import { BsInfoCircle } from "react-icons/bs";
+import { FaArrowLeft } from "react-icons/fa";
 
 import { quicksand, raleway } from "@/app/fonts";
 import AdjustCash from "@/app/portfolio/manual-portfolio/[slug]/adjust-cash";
@@ -43,14 +45,24 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
   return (
     <Card.Root width="60%">
       <Card.Header
-        className={quicksand.className}
-        fontSize="2xl"
-        fontWeight={"bold"}
         borderBottomWidth="2px"
         borderColor="gray.400"
         pb="4"
+        display="flex"
+        flexDir="row"
       >
-        Summary
+        <Link href="/portfolio">
+          <Button>
+            <FaArrowLeft className="text-blue-500 cursor-pointer" />
+          </Button>
+        </Link>
+        <Text
+          className={quicksand.className}
+          fontSize="2xl"
+          fontWeight={"bold"}
+        >
+          Summary
+        </Text>
       </Card.Header>
       <Card.Body display="flex" flexDir="column" gap="8">
         <Flex
@@ -155,6 +167,31 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
           </List.Root>
         </Flex>
       </Card.Body>
+      <Card.Footer
+        borderBottomWidth="2px"
+        borderColor="gray.400"
+        display="flex"
+        flexDir="row"
+        justifyContent={"center"}
+      >
+        <Link
+          href={`/portfolio/manual-portfolio/${manualPortfolio.name}/update`}
+        >
+          <Button
+            className={raleway.className}
+            fontSize="lg"
+            fontWeight={"semibold"}
+            backgroundColor={"blue.50"}
+            cursor={"pointer"}
+            _hover={{ bg: "blue.100" }}
+            px="8"
+            py="4"
+            borderRadius={"lg"}
+          >
+            Update
+          </Button>
+        </Link>
+      </Card.Footer>
     </Card.Root>
   );
 };

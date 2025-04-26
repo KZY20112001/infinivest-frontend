@@ -2,11 +2,13 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 import { FaArrowRight } from "react-icons/fa";
-import { Card, Flex, Text, Button } from "@chakra-ui/react";
+import { Card, Flex, Text } from "@chakra-ui/react";
 
 import { fetchRoboPortfolioSummary } from "@/app/api/robo-portfolio";
 import { getManualPortfolios } from "@/app/api/manual-portfolio";
 import { geistMono, quicksand, raleway } from "@/app/fonts";
+
+import CreateManualPortfolio from "@/app/portfolio/create-manual-portfolio";
 
 export const metadata: Metadata = {
   title: "Infinivest | Portfolios",
@@ -134,19 +136,7 @@ const Portfolio = async () => {
             ))}
           </Card.Body>
           <Card.Footer display={"flex"} justifyContent={"center"}>
-            <Button
-              className={raleway.className}
-              fontSize="lg"
-              fontWeight={"semibold"}
-              backgroundColor={"blue.50"}
-              cursor={"pointer"}
-              _hover={{ bg: "blue.100" }}
-              px="8"
-              py="4"
-              borderRadius={"lg"}
-            >
-              Add a new manual portfolio
-            </Button>
+            <CreateManualPortfolio />
           </Card.Footer>
         </Card.Root>
       </Flex>

@@ -1,14 +1,15 @@
 "use client";
 import { FC, useMemo } from "react";
 
+import Link from "next/link";
 import { Card, Flex, Text } from "@chakra-ui/react";
+import { FaArrowLeft } from "react-icons/fa";
 
 import { quicksand } from "@/app/fonts";
-
 import AdjustCash from "@/app/portfolio/robo-portfolio/adjust-cash";
 import DisplayCash from "@/app/portfolio/robo-portfolio/display-cash";
 import DisplayCategories from "@/app/portfolio/robo-portfolio/display-categories";
-
+import { Button } from "@/components/ui/button";
 import { RoboPortfolio, RoboPortfolioSummary } from "@/types/robo-portfolio";
 
 interface DisplayRoboPortfolioProps {
@@ -28,14 +29,24 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
   return (
     <Card.Root width="60%">
       <Card.Header
-        className={quicksand.className}
-        fontSize="2xl"
-        fontWeight={"bold"}
         borderBottomWidth="2px"
         borderColor="gray.400"
         pb="4"
+        display="flex"
+        flexDir="row"
       >
-        Summary
+        <Link href="/portfolio">
+          <Button>
+            <FaArrowLeft className="text-blue-500 cursor-pointer" />
+          </Button>
+        </Link>
+        <Text
+          className={quicksand.className}
+          fontSize="2xl"
+          fontWeight={"bold"}
+        >
+          Summary
+        </Text>
       </Card.Header>
 
       <Card.Body display="flex" flexDir="column" gap="8">

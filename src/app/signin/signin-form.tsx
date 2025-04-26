@@ -46,7 +46,7 @@ const SignInForm = () => {
       const isSuccessful = await signIn(values.email, values.password);
       if (isSuccessful) {
         toast("Successful");
-        router.push("/portfolio");
+        router.push("/home");
       } else {
         toast("Wrong Credentials");
       }

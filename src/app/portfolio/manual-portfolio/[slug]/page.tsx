@@ -39,7 +39,7 @@ const ManualPortfolio = async ({
         color="black"
         mb="12"
       >
-        Portfolio - {manualPortfolio.name}
+        {manualPortfolio.name}
       </Text>
       <DisplayManualPorfolio
         manualPortfolio={manualPortfolio}

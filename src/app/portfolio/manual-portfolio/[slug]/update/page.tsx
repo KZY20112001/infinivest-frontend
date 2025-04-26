@@ -36,7 +36,7 @@ const UpdateManualPortfolioPage = async ({
         color="black"
         mb="12"
       >
-        Update Portfolio - {manualPortfolio.name}
+        {manualPortfolio.name}
       </Text>
       <UpdateManualPortfolio manualPortfolio={manualPortfolio} />
     </Flex>
