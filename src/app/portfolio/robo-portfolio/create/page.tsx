@@ -5,7 +5,7 @@ import { Flex, Text } from "@chakra-ui/react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import CreatePortfolio from "@/app/portfolio/robo-portfolio/create/create-portfolio";
-import { fetchRoboPortfolioSummary } from "@/app/api/robo-portfolio";
+import { getRoboPortfolioSummary } from "@/app/api/robo-portfolio";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const CreateRoboPortfolio = async () => {
-  const roboPortfolio = await fetchRoboPortfolioSummary();
+  const roboPortfolio = await getRoboPortfolioSummary();
   return (
     <Flex
       justifyContent={"center"}

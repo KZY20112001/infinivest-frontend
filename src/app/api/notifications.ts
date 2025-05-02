@@ -16,3 +16,13 @@ export async function getNotifications(): Promise<string[]> {
     return [];
   }
 }
+
+export async function deleteNotifications(): Promise<void> {
+  try {
+    await backendClient("/portfolio/notifications", {
+      method: "DELETE",
+    });
+  } catch (error) {
+    console.error("Error deleting notifications: ", error);
+  }
+}

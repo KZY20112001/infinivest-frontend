@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 import { Flex, Text } from "@chakra-ui/react";
 
 import {
-  fetchRoboPortfolio,
-  fetchRoboPortfolioSummary,
+  getRoboPortfolio,
+  getRoboPortfolioSummary,
 } from "@/app/api/robo-portfolio";
 import { raleway } from "@/app/fonts";
 
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 };
 
 const RoboPortfolio = async () => {
-  const roboPortfolio = await fetchRoboPortfolio();
-  const roboPortfolioSummary = await fetchRoboPortfolioSummary();
+  const roboPortfolio = await getRoboPortfolio();
+  const roboPortfolioSummary = await getRoboPortfolioSummary();
   if (!roboPortfolio || !roboPortfolioSummary) {
     redirect("/portfolio/robo-portfolio/create");
   }

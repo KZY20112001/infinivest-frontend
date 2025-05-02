@@ -9,12 +9,14 @@ import {
   Popover,
   Badge,
   VStack,
+  Separator,
 } from "@chakra-ui/react";
 import { FaBell } from "react-icons/fa";
 
 import { PUBLIC_ROUTES } from "@/config";
 import { Button } from "@/components/ui/button";
 import { quicksand, raleway } from "@/app/fonts";
+import { deleteNotifications } from "@/app/api/notifications";
 
 interface NavbarContentProps {
   notifications: string[];
@@ -27,6 +29,11 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
   if (PUBLIC_ROUTES.includes(pathname)) {
     return null;
   }
+
+  const handleClearNotifications = async () => {
+    await deleteNotifications();
+    router.refresh();
+  };
 
   const handleLogout = () => {
     router.push("/");
@@ -49,6 +56,7 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
       p="2"
       alignItems="center"
       gap="8"
+      zIndex={1000}
     >
       <Popover.Root>
         <Popover.Trigger asChild>
@@ -72,15 +80,16 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
           </Box>
         </Popover.Trigger>
         <Popover.Positioner>
-          <Popover.Content width="28rem">
+          <Popover.Content
+            width="28rem"
+            bgColor="gray.100"
+            rounded="lg"
+            className={quicksand.className}
+          >
             <Popover.Arrow>
               <Popover.ArrowTip />
             </Popover.Arrow>
-            <Popover.Body
-              color="black"
-              fontWeight={"semibold"}
-              className={quicksand.className}
-            >
+            <Popover.Body color="black" fontWeight={"semibold"} mb="3">
               <Popover.Title
                 fontWeight="semibold"
                 borderBottomWidth="1px"
@@ -163,6 +172,25 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
                 )}
               </Box>
             </Popover.Body>
+            <Separator borderColor={"gray.300"} borderWidth={"2px"} />
+            <Popover.Footer
+              color="gr"
+              display={"flex"}
+              justifyContent="center"
+              mt="2"
+            >
+              <Button
+                bgColor="lightblue"
+                color="gray.700"
+                px="4"
+                py="2"
+                fontWeight={"bold"}
+                disabled={notifications.length === 0}
+                onClick={handleClearNotifications}
+              >
+                Clear All
+              </Button>
+            </Popover.Footer>
           </Popover.Content>
         </Popover.Positioner>
       </Popover.Root>

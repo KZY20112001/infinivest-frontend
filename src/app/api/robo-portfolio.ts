@@ -10,9 +10,11 @@ import {
   RoboPortfolioSummary,
   RoboPortfolioSummaryResponse,
   ROBO_CATEGORY,
+  RebalanceEvent,
+  RebalanceEventsResponse,
 } from "@/types/robo-portfolio";
 
-export async function fetchRoboPortfolioSummary(): Promise<RoboPortfolioSummary | null> {
+export async function getRoboPortfolioSummary(): Promise<RoboPortfolioSummary | null> {
   try {
     const response = await backendClient<RoboPortfolioSummaryResponse>(
       "/portfolio/robo-portfolio/summary",
@@ -27,7 +29,7 @@ export async function fetchRoboPortfolioSummary(): Promise<RoboPortfolioSummary 
   }
 }
 
-export async function fetchRoboPortfolio(): Promise<RoboPortfolio | null> {
+export async function getRoboPortfolio(): Promise<RoboPortfolio | null> {
   try {
     const response = await backendClient<RoboPortfolioResponse>(
       "/portfolio/robo-portfolio/details",
@@ -42,6 +44,21 @@ export async function fetchRoboPortfolio(): Promise<RoboPortfolio | null> {
   }
 }
 
+export async function getRebalanceEvents(): Promise<RebalanceEvent[]> {
+  try {
+    const response = await backendClient<RebalanceEventsResponse>(
+      "/portfolio/robo-portfolio/rebalance/details",
+      {
+        method: "GET",
+      }
+    );
+    console.log("api: rebalance events: ", response);
+    return response ? response.rebalance_details : [];
+  } catch (error) {
+    console.error("No rebalance events exist", error);
+    return [];
+  }
+}
 export async function generatePortfolioSplit(
   file: File,
   bankName: string,

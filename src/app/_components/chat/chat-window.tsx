@@ -20,7 +20,7 @@ import {
 import { quicksand, raleway } from "@/app/fonts";
 import { getProfile } from "@/app/api/profile";
 import { Message, QueryContext } from "@/types/chat";
-import { fetchRoboPortfolio } from "@/app/api/robo-portfolio";
+import { getRoboPortfolio } from "@/app/api/robo-portfolio";
 import { getManualPortfolio } from "@/app/api/manual-portfolio";
 import { getReply } from "@/app/api/chat";
 
@@ -70,7 +70,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
     if (userProfile) additionalContext.profile = userProfile;
 
     if (pathname.includes("/robo-portfolio")) {
-      const roboPortfolioData = await fetchRoboPortfolio();
+      const roboPortfolioData = await getRoboPortfolio();
       if (roboPortfolioData)
         additionalContext.roboPortfolio = roboPortfolioData;
     } else if (pathname.includes("/manual-portfolio")) {
