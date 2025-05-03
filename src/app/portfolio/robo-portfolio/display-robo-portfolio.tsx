@@ -3,7 +3,7 @@ import { FC, useMemo } from "react";
 
 import Link from "next/link";
 import { Card, Flex, Text } from "@chakra-ui/react";
-import { FaArrowLeft } from "react-icons/fa";
+import { ArrowLeft } from "lucide-react";
 
 import { quicksand } from "@/app/fonts";
 import AdjustCash from "@/app/portfolio/robo-portfolio/adjust-cash";
@@ -37,7 +37,7 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
       >
         <Link href="/portfolio">
           <Button>
-            <FaArrowLeft className="text-blue-500 cursor-pointer" />
+            <ArrowLeft className="text-blue-500 cursor-pointer" />
           </Button>
         </Link>
         <Text

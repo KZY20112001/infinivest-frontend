@@ -1,11 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FaArrowLeft } from "react-icons/fa";
-
-import { BsInfoCircle } from "react-icons/bs";
 import { FC, useState, useTransition } from "react";
+
 import { Card, Flex, Input, Text } from "@chakra-ui/react";
+import { ArrowLeft, Info } from "lucide-react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import { updateManualPortfolio } from "@/app/api/manual-portfolio";
@@ -62,7 +61,7 @@ const UpdateManualPortfolio: FC<UpdateManualPortfolioProps> = ({
       >
         <Link href={`/portfolio/manual-portfolio/${manualPortfolio.name}`}>
           <Button>
-            <FaArrowLeft className="text-blue-500 cursor-pointer" />
+            <ArrowLeft className="text-blue-500 cursor-pointer" />
           </Button>
         </Link>
         <Text
@@ -86,7 +85,7 @@ const UpdateManualPortfolio: FC<UpdateManualPortfolioProps> = ({
               Name
             </Text>
             <Tooltip content="This is the unique name for your portfolio!">
-              <BsInfoCircle className="cursor-pointer" />
+              <Info className="cursor-pointer" />
             </Tooltip>
           </Flex>
           <Flex
@@ -143,11 +142,7 @@ const UpdateManualPortfolio: FC<UpdateManualPortfolioProps> = ({
                 Liquid Cash
               </Text>
               <Tooltip content="Liquid cash is the amount of buffer money put aside as a buffer">
-                <BsInfoCircle
-                  color="black"
-                  size="20"
-                  className="cursor-pointer"
-                />
+                <Info color="black" size="20" className="cursor-pointer" />
               </Tooltip>
             </Flex>
             <Flex

@@ -3,10 +3,13 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { Box, IconButton, VStack } from "@chakra-ui/react";
-import { FaChevronLeft } from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
-import { CgProfile, CgInsights } from "react-icons/cg";
-import { MdAttachMoney } from "react-icons/md";
+import {
+  Lightbulb,
+  UserPen,
+  House,
+  DollarSign,
+  ChevronLeft,
+} from "lucide-react";
 
 import { PUBLIC_ROUTES } from "@/config";
 import SidebarItem from "@/app/_components/sidebar/sidebar-item";
@@ -37,26 +40,26 @@ const Sidebar = () => {
         {!isCollapsed && (
           <VStack align="stretch" gap={4}>
             <SidebarItem
-              CustomIcon={FiHome}
+              CustomIcon={House}
               href="/home"
               text="Home"
               isActive={pathname.startsWith("/home")}
             />
 
             <SidebarItem
-              CustomIcon={CgProfile}
+              CustomIcon={UserPen}
               href="/profile"
               text="Profile"
               isActive={pathname.startsWith("/profile")}
             />
             <SidebarItem
-              CustomIcon={MdAttachMoney}
+              CustomIcon={DollarSign}
               href="/portfolio"
               text="Portfolios"
               isActive={pathname.startsWith("/portfolio")}
             />
             <SidebarItem
-              CustomIcon={CgInsights}
+              CustomIcon={Lightbulb}
               href="/insights"
               text="Insights"
               isActive={pathname.startsWith("/insights")}
@@ -82,7 +85,7 @@ const Sidebar = () => {
           transformOrigin="center"
           color="black"
         >
-          <FaChevronLeft />
+          <ChevronLeft />
         </Box>
       </IconButton>
     </Box>

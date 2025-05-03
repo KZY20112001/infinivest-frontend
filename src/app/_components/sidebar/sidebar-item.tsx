@@ -1,10 +1,15 @@
 import Link from "next/link";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+
 import { FlexProps, Flex, Icon, Text } from "@chakra-ui/react";
-import { IconType } from "react-icons/lib";
+import { LucideProps } from "lucide-react";
+
 import { quicksand } from "@/app/fonts";
 
 interface SidebarItemProps extends FlexProps {
-  CustomIcon: IconType;
+  CustomIcon: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
   href: string;
   text: string;
   isActive: boolean;

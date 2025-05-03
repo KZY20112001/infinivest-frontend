@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Profile } from "@/types/profile";
 import { quicksand, raleway } from "@/app/fonts";
-import { FaArrowLeft } from "react-icons/fa";
+import { ArrowLeft } from "lucide-react";
 
 interface ProfileCardProps {
   profile: Profile;
@@ -42,7 +42,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
         >
           <ChakraLink asChild position="absolute" left="4">
             <NextLink href="/home">
-              <FaArrowLeft className="text-blue-500 cursor-pointer" />
+              <ArrowLeft className="text-blue-500 cursor-pointer" />
             </NextLink>
           </ChakraLink>
 

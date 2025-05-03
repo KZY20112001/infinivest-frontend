@@ -2,8 +2,8 @@
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-import { PiFinnTheHuman } from "react-icons/pi";
-import { IoClose, IoSend } from "react-icons/io5";
+import { Bot, CircleX, SendHorizontal } from "lucide-react";
+
 import ReactMarkdown from "react-markdown";
 
 import {
@@ -138,7 +138,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
           bgColor="blue.50"
           onClick={onClose}
         >
-          <IoClose className="invert" />
+          <CircleX className="invert" />
         </IconButton>
       </HStack>
 
@@ -151,9 +151,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
             justify={msg.role === "user" ? "flex-end" : "flex-start"}
             w="100%"
           >
-            {msg.role === "assistant" && (
-              <PiFinnTheHuman color="gray" size="1.5rem" />
-            )}
+            {msg.role === "assistant" && <Bot color="gray" size="1.5rem" />}
 
             <Box
               alignSelf={msg.role === "user" ? "flex-end" : "flex-start"}
@@ -185,7 +183,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
           onChange={(e) => setInput(e.target.value)}
         />
         <Button colorScheme="blue" onClick={sendMessage}>
-          <IoSend className="invert" />
+          <SendHorizontal className="invert" />
         </Button>
       </HStack>
     </Flex>

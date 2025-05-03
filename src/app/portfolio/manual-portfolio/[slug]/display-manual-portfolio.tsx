@@ -4,8 +4,8 @@ import { FC, useState } from "react";
 
 import ClipLoader from "react-spinners/ClipLoader";
 import { Card, Flex, List, Text } from "@chakra-ui/react";
-import { BsInfoCircle } from "react-icons/bs";
-import { FaArrowLeft } from "react-icons/fa";
+
+import { ArrowLeft, Info } from "lucide-react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import AdjustCash from "@/app/portfolio/manual-portfolio/[slug]/adjust-cash";
@@ -53,7 +53,7 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
       >
         <Link href="/portfolio">
           <Button>
-            <FaArrowLeft className="text-blue-500 cursor-pointer" />
+            <ArrowLeft className="text-blue-500 cursor-pointer" />
           </Button>
         </Link>
         <Text
@@ -107,11 +107,7 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
               Liquid Cash
             </Text>
             <Tooltip content="Liquid cash is the amount of buffer money put aside as a buffer">
-              <BsInfoCircle
-                color="black"
-                size="20"
-                className="cursor-pointer"
-              />
+              <Info color="black" size="20" className="cursor-pointer" />
             </Tooltip>
           </Flex>
           <Flex

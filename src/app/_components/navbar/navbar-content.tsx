@@ -11,7 +11,8 @@ import {
   VStack,
   Separator,
 } from "@chakra-ui/react";
-import { FaBell } from "react-icons/fa";
+
+import { Bell } from "lucide-react";
 
 import { PUBLIC_ROUTES } from "@/config";
 import { Button } from "@/components/ui/button";
@@ -62,7 +63,7 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
         <Popover.Trigger asChild>
           <Box position="relative">
             <IconButton aria-label="Notifications" color="blue.500">
-              <FaBell />
+              <Bell />
             </IconButton>
             {notifications.length > 0 && (
               <Badge

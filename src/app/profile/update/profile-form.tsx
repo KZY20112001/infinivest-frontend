@@ -3,7 +3,7 @@
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { ArrowLeft } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 
 import { FormControl } from "@chakra-ui/form-control";
@@ -130,7 +130,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
         >
           <ChakraLink asChild position="absolute" left="4">
             <NextLink href="/home">
-              <FaArrowLeft className="text-blue-500 cursor-pointer" />
+              <ArrowLeft className="text-blue-500 cursor-pointer" />
             </NextLink>
           </ChakraLink>
           <Text

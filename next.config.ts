@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     esmExternals: false,
     optimizePackageImports: ["@chakra-ui/react"],
   },
+
   typescript: {
     ignoreBuildErrors: true,
   },

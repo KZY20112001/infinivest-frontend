@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-import { FaArrowRight } from "react-icons/fa";
+import { ArrowRight } from "lucide-react";
+
 import { Card, Flex, Text } from "@chakra-ui/react";
 
 import { getRoboPortfolioSummary } from "@/app/api/robo-portfolio";
@@ -52,7 +53,7 @@ const Portfolio = async () => {
           >
             <Text>Robo-advised Portfolio</Text>
             <Link href="/portfolio/robo-portfolio">
-              <FaArrowRight className="text-blue-500 cursor-pointer" />
+              <ArrowRight className="text-blue-500 cursor-pointer" />
             </Link>
           </Card.Header>
           <Card.Body
@@ -118,7 +119,7 @@ const Portfolio = async () => {
                 >
                   <Text className={quicksand.className}>{portfolio.name}</Text>
                   <Link href={`/portfolio/manual-portfolio/${portfolio.name}`}>
-                    <FaArrowRight className="text-blue-500 cursor-pointer" />
+                    <ArrowRight className="text-blue-500 cursor-pointer" />
                   </Link>
                 </Card.Header>
                 <Card.Body
