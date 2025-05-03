@@ -1,6 +1,13 @@
-import Link from "next/link";
+import NextLink from "next/link";
 
-import { Button, Card, Flex, Image, Separator, Text } from "@chakra-ui/react";
+import {
+  Link as ChakraLink,
+  Card,
+  Flex,
+  Image,
+  Separator,
+  Text,
+} from "@chakra-ui/react";
 import { Profile } from "@/types/profile";
 import { quicksand, raleway } from "@/app/fonts";
 import { FaArrowLeft } from "react-icons/fa";
@@ -33,11 +40,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
           alignItems="center"
           position="relative"
         >
-          <Link href="/">
-            <Button position="absolute" left="4">
+          <ChakraLink asChild position="absolute" left="4">
+            <NextLink href="/home">
               <FaArrowLeft className="text-blue-500 cursor-pointer" />
-            </Button>
-          </Link>
+            </NextLink>
+          </ChakraLink>
 
           <Text
             className={quicksand.className}
@@ -54,13 +61,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
           <Flex gap="20">
             <Image
               src={
-                profile && profile.profileUrl !== ""
+                profile.profileUrl !== ""
                   ? profile.profileUrl
                   : "/profile-placeholder.jpg"
               }
               alt="profile picture"
               boxSize="250px"
               fit="cover"
+              rounded="xl"
             />
 
             <Flex direction={"column"} gap="4">
@@ -200,22 +208,27 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
           className={raleway.className}
           fontWeight={"semibold"}
         >
-          <Link href="/profile/update">
-            <Button
-              backgroundColor="gray.200"
-              px="2"
-              _hover={{ cursor: "pointer" }}
-            >
-              Update Profile
-            </Button>
-          </Link>
-          <Button
-            backgroundColor="gray.200"
-            px="2"
+          <ChakraLink
+            asChild
+            backgroundColor="blue.200"
+            px="4"
+            py="2"
+            rounded="lg"
             _hover={{ cursor: "pointer" }}
           >
-            Set Up Portfolios
-          </Button>
+            <NextLink href="/profile/update">Update Profile</NextLink>
+          </ChakraLink>
+
+          <ChakraLink
+            asChild
+            backgroundColor="blue.200"
+            px="4"
+            py="2"
+            rounded="lg"
+            _hover={{ cursor: "pointer" }}
+          >
+            <NextLink href="/home">Dashboard</NextLink>
+          </ChakraLink>
         </Card.Footer>
       </Card.Root>
     </Flex>

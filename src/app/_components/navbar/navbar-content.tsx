@@ -89,7 +89,7 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
             <Popover.Arrow>
               <Popover.ArrowTip />
             </Popover.Arrow>
-            <Popover.Body color="black" fontWeight={"semibold"} mb="3">
+            <Popover.Body color="black" fontWeight={"semibold"}>
               <Popover.Title
                 fontWeight="semibold"
                 borderBottomWidth="1px"
@@ -167,7 +167,7 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
                   </VStack>
                 ) : (
                   <Box p="3">
-                    <Text>No notifications</Text>
+                    <Text>No notifications yet</Text>
                   </Box>
                 )}
               </Box>

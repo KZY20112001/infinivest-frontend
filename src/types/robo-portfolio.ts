@@ -7,6 +7,7 @@ export type ROBO_CATEGORY =
   | "international_bonds";
 
 export type RebalanceEvent = {
+  CreatedAt: string;
   totalBuyAmount: number;
   totalSellAmount: number;
   netChange: number;
@@ -48,6 +49,7 @@ export type RoboPortfolio = {
 export type RoboPortfolioSummary = {
   rebalanceFreq: string;
   totalValue: number;
+  totalInvested: number;
 };
 
 export type RoboPortfolioResponse = {

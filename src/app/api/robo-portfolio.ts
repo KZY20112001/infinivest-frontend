@@ -52,7 +52,6 @@ export async function getRebalanceEvents(): Promise<RebalanceEvent[]> {
         method: "GET",
       }
     );
-    console.log("api: rebalance events: ", response);
     return response ? response.rebalance_details : [];
   } catch (error) {
     console.error("No rebalance events exist", error);
@@ -133,7 +132,6 @@ export async function createRoboPortfolio(
       },
       allocations,
     };
-    console.log("here: ", req);
     const response = await backendClient<{ message: string }>(
       "/portfolio/robo-portfolio/confirm",
       { method: "POST", body: JSON.stringify(req) }
@@ -175,7 +173,6 @@ export async function withdrawMoneyFromRoboPortfolio(
       "/portfolio/robo-portfolio/withdraw",
       { method: "POST", body: JSON.stringify({ amount }) }
     );
-    console.log(response);
     if (!response) return null;
     return response.amount;
   } catch (error) {

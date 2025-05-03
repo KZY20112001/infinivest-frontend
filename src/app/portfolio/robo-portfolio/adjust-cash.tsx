@@ -50,7 +50,6 @@ const AdjustCash = () => {
   const withDrawMoney = async () => {
     setIsLoading(true);
     const result = await withdrawMoneyFromRoboPortfolio(amount);
-    console.log("result: ", result);
     if (result !== null) {
       toast(`Withdrawn $${result}`);
       setAmountWithdrawn(() => amountWithdrawn + result);
