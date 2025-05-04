@@ -5,7 +5,7 @@ import { NotificationReponse } from "@/types/notification";
 export async function getNotifications(): Promise<string[]> {
   try {
     const response = await backendClient<NotificationReponse>(
-      "/portfolio/notifications",
+      "/portfolio/notifications/",
       {
         method: "GET",
       }
@@ -19,7 +19,7 @@ export async function getNotifications(): Promise<string[]> {
 
 export async function deleteNotifications(): Promise<void> {
   try {
-    await backendClient("/portfolio/notifications", {
+    await backendClient("/portfolio/notifications/", {
       method: "DELETE",
     });
   } catch (error) {

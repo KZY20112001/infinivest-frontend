@@ -19,6 +19,7 @@ export type ManualPortfolioResponse = {
 export type ManualPortfolioSummary = {
   name: string;
   totalValue: number;
+  totalInvested: number;
 };
 
 export type ManualPortfoliosSummariesResponse = {

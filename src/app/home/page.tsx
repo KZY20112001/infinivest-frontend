@@ -1,14 +1,6 @@
 import { Metadata } from "next";
 import NextLink from "next/link";
-import {
-  Box,
-  Card,
-  Flex,
-  Image,
-  Separator,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Card, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { Link as ChakraLink } from "@chakra-ui/react";
 
 import { quicksand, raleway } from "@/app/fonts";
@@ -19,6 +11,7 @@ import {
 } from "@/app/api/robo-portfolio";
 import { getManualPortfolios } from "@/app/api/manual-portfolio";
 import { getProfile } from "@/app/api/profile";
+import { Fragment } from "react";
 
 export const metadata: Metadata = {
   title: "Infinivest",
@@ -31,8 +24,6 @@ const Home = async () => {
   const roboPortfolioSummary = await getRoboPortfolioSummary();
   const rebalanceEvents = await getRebalanceEvents();
 
-  console.log("rebalanceEvents", rebalanceEvents);
-  console.log("manualPortfolios", manualPortfolios);
   return (
     <Flex direction="column" align="center" p="4" gap="8">
       <Card.Root w="100%" maxW="4xl">
@@ -163,7 +154,7 @@ const Home = async () => {
                     bg="gray.50"
                     mb="6"
                   >
-                    <Flex gap="4">
+                    <Flex gap="2">
                       <Text
                         w="40"
                         className={raleway.className}
@@ -255,7 +246,6 @@ const Home = async () => {
         </Card.Body>
       </Card.Root>
 
-      {/* Manual Portfolios Summary */}
       <Card.Root w="100%" maxW="4xl">
         <Card.Title
           borderBottom="1px solid black"
@@ -270,47 +260,87 @@ const Home = async () => {
         </Card.Title>
         <Card.Body p="4">
           {manualPortfolios.length > 0 ? (
-            <>
-              {" "}
-              <Stack
-                borderWidth="1px"
-                rounded="lg"
-                p="4"
-                boxShadow="md"
-                bg="gray.50"
-                mb="6"
-              >
-                <Flex gap="4">
-                  <Text
-                    w="40"
-                    className={raleway.className}
-                    fontWeight="semibold"
+            <Flex gap="8" flexWrap="wrap">
+              {manualPortfolios.map((portfolio, index) => {
+                const { totalValue, totalInvested } = portfolio;
+                let gainOrLossPercentage;
+                if (totalInvested === 0) gainOrLossPercentage = 0;
+                else
+                  gainOrLossPercentage =
+                    ((totalValue - totalInvested) / totalInvested) * 100;
+                const isGain = gainOrLossPercentage >= 0;
+                return (
+                  <Stack
+                    key={portfolio.name + index}
+                    borderWidth="1px"
+                    rounded="lg"
+                    p="4"
+                    boxShadow="md"
+                    bg="gray.50"
+                    w="25rem"
+                    gap="4"
                   >
-                    Current Value:
-                  </Text>
-                  <Text fontWeight="bold">$1000</Text>
-                </Flex>
-              </Stack>
-              <ChakraLink
-                asChild
-                as="button"
-                bgColor="blue.100"
-                px="4"
-                py="2"
-                w="80"
-                display="flex"
-                justifyContent="center"
-                ml="auto"
-                mr="auto"
-                rounded="lg"
-                fontWeight="semibold"
-                className={raleway.className}
-              >
-                <NextLink href="/portfolio/manual-portfolio/">
-                  Go to Portfolio
-                </NextLink>
-              </ChakraLink>
-            </>
+                    <Text
+                      className={quicksand.className}
+                      ml="auto"
+                      mr="auto"
+                      fontWeight={"bold"}
+                    >
+                      {portfolio.name}
+                    </Text>
+                    <Flex gap="2">
+                      <Text
+                        w="28"
+                        className={raleway.className}
+                        fontWeight="semibold"
+                      >
+                        Current Value:
+                      </Text>
+                      <Text fontWeight="bold">${totalValue}</Text>
+                    </Flex>
+
+                    <Flex gap="2">
+                      <Text
+                        w="28"
+                        className={raleway.className}
+                        fontWeight="semibold"
+                      >
+                        Estimated ROI:
+                      </Text>
+                      <Text
+                        fontWeight="bold"
+                        color={isGain ? "green.500" : "red.500"}
+                      >
+                        {isGain ? "Gain" : "Loss"} (
+                        {gainOrLossPercentage.toFixed(2)}%)
+                      </Text>
+                    </Flex>
+
+                    <ChakraLink
+                      asChild
+                      as="button"
+                      bgColor="blue.100"
+                      px="4"
+                      py="2"
+                      w="40"
+                      display="flex"
+                      justifyContent="center"
+                      ml="auto"
+                      mr="auto"
+                      rounded="lg"
+                      fontWeight="semibold"
+                      className={raleway.className}
+                    >
+                      <NextLink
+                        href={`/portfolio/manual-portfolio/${portfolio.name}`}
+                      >
+                        See Details
+                      </NextLink>
+                    </ChakraLink>
+                  </Stack>
+                );
+              })}
+            </Flex>
           ) : (
             <Flex justify="center" align={"center"} gap="6">
               <Text fontWeight="semibold" className={raleway.className}>
@@ -334,8 +364,7 @@ const Home = async () => {
         </Card.Body>
       </Card.Root>
 
-      {/* Insights & Activities */}
-      <Card.Root w="100%" maxW="4xl">
+      {/* <Card.Root w="100%" maxW="4xl">
         <Box borderBottom="1px solid #ccc" p="4">
           <Text fontSize="xl" fontWeight="bold">
             AI Insights & Recent Activity
@@ -353,7 +382,7 @@ const Home = async () => {
             <Text>- Robo Portfolio rebalanced on Apr 25, 2025</Text>
           </Stack>
         </Box>
-      </Card.Root>
+      </Card.Root> */}
     </Flex>
   );
 };

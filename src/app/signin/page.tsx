@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
+import { Flex, Text } from "@chakra-ui/react";
+
 import { quicksand } from "@/app/fonts";
 import SignInForm from "@/app/signin/signin-form";
-
-import { Flex, Text } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "Sign In",
