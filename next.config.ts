@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     esmExternals: false,
     optimizePackageImports: ["@chakra-ui/react"],
   },
+  productionBrowserSourceMaps: false, // Disable source maps in development
 
   typescript: {
     ignoreBuildErrors: true,

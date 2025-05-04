@@ -13,6 +13,7 @@ import {
   RebalanceEvent,
   RebalanceEventsResponse,
 } from "@/types/robo-portfolio";
+import { Transaction, TransactionsResponse } from "@/types/transaction";
 
 export async function getRoboPortfolioSummary(): Promise<RoboPortfolioSummary | null> {
   try {
@@ -41,6 +42,21 @@ export async function getRoboPortfolio(): Promise<RoboPortfolio | null> {
   } catch (error) {
     console.error("No robo portfolio exists", error);
     return null;
+  }
+}
+
+export async function getRoboPortfolioTransactions(): Promise<Transaction[]> {
+  try {
+    const response = await backendClient<TransactionsResponse>(
+      "/portfolio/robo-portfolio/transactions",
+      {
+        method: "GET",
+      }
+    );
+    return response?.transactions ?? [];
+  } catch (error) {
+    console.log("Error in fetching transactions.", error);
+    return [];
   }
 }
 

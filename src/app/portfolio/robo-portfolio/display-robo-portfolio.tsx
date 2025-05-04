@@ -1,15 +1,14 @@
 "use client";
 import { FC, useMemo } from "react";
+import NextLink from "next/link";
+import { Link as ChakraLink, Card, Flex, Text } from "@chakra-ui/react";
 
-import Link from "next/link";
-import { Card, Flex, Text } from "@chakra-ui/react";
 import { ArrowLeft } from "lucide-react";
 
-import { quicksand } from "@/app/fonts";
+import { quicksand, raleway } from "@/app/fonts";
 import AdjustCash from "@/app/portfolio/robo-portfolio/adjust-cash";
 import DisplayCash from "@/app/portfolio/robo-portfolio/display-cash";
 import DisplayCategories from "@/app/portfolio/robo-portfolio/display-categories";
-import { Button } from "@/components/ui/button";
 import { RoboPortfolio, RoboPortfolioSummary } from "@/types/robo-portfolio";
 
 interface DisplayRoboPortfolioProps {
@@ -35,11 +34,11 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
         display="flex"
         flexDir="row"
       >
-        <Link href="/portfolio">
-          <Button>
+        <ChakraLink asChild>
+          <NextLink href="/portfolio">
             <ArrowLeft className="text-blue-500 cursor-pointer" />
-          </Button>
-        </Link>
+          </NextLink>
+        </ChakraLink>
         <Text
           className={quicksand.className}
           fontSize="2xl"
@@ -47,6 +46,23 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
         >
           Summary
         </Text>
+
+        <ChakraLink
+          mr="0"
+          ml="auto"
+          asChild
+          as="button"
+          bgColor="blue.100"
+          px="4"
+          py="2"
+          rounded="lg"
+          fontWeight="semibold"
+          className={raleway.className}
+        >
+          <NextLink href="/portfolio/robo-portfolio/transactions">
+            Check Transactions
+          </NextLink>
+        </ChakraLink>
       </Card.Header>
 
       <Card.Body display="flex" flexDir="column" gap="8">
