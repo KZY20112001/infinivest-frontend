@@ -235,7 +235,7 @@ const ManualAsset = ({
           <DialogFooter className={raleway.className} fontWeight={"semibold"}>
             <Button
               bgColor={valid ? "green.50" : "gray.50"}
-              disabled={!valid}
+              disabled={!valid || amount === 0}
               px="4"
               py="1"
               w="28"

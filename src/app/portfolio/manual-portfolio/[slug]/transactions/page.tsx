@@ -1,27 +1,31 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { Flex, Text } from "@chakra-ui/react";
 
-import { getManualPortfolio } from "@/app/api/manual-portfolio";
+import {
+  getManualPortfolio,
+  getManualPortfolioTransactions,
+} from "@/app/api/manual-portfolio";
+import { redirect } from "next/navigation";
 import { raleway } from "@/app/fonts";
-import UpdateManualPortfolio from "@/app/portfolio/manual-portfolio/[slug]/update/update-manual-portfolio";
+import DisplayTransactions from "@/app/portfolio/manual-portfolio/[slug]/transactions/display-ransactions";
 
 export const metadata: Metadata = {
-  title: "Infinivest | Manual Portfolio",
-  description: "Your Manual Portfolio",
+  title: "Infinivest | Robo-Portfolio",
+  description: "Manual Portfolio",
 };
 
-const UpdateManualPortfolioPage = async ({
+const ManualPortfolioTransactions = async ({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-
   const manualPortfolio = await getManualPortfolio(slug);
   if (!manualPortfolio) {
     redirect("/portfolio");
   }
+  const transactions = await getManualPortfolioTransactions(slug);
+  console.log(transactions);
   return (
     <Flex
       justifyContent={"center"}
@@ -36,11 +40,11 @@ const UpdateManualPortfolioPage = async ({
         color="black"
         mb="12"
       >
-        {manualPortfolio.name}
+        {slug} Transaction History
       </Text>
-      <UpdateManualPortfolio manualPortfolio={manualPortfolio} />
+      <DisplayTransactions name={slug} transactions={transactions} />
     </Flex>
   );
 };
 
-export default UpdateManualPortfolioPage;
+export default ManualPortfolioTransactions;

@@ -1,9 +1,9 @@
 "use client";
-import Link from "next/link";
 import { FC, useState } from "react";
+import NextLink from "next/link";
 
 import ClipLoader from "react-spinners/ClipLoader";
-import { Card, Flex, List, Text } from "@chakra-ui/react";
+import { Link as ChakraLink, Card, Flex, List, Text } from "@chakra-ui/react";
 
 import { ArrowLeft, Info } from "lucide-react";
 
@@ -51,11 +51,11 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
         display="flex"
         flexDir="row"
       >
-        <Link href="/portfolio">
-          <Button>
+        <ChakraLink asChild>
+          <NextLink href="/portfolio">
             <ArrowLeft className="text-blue-500 cursor-pointer" />
-          </Button>
-        </Link>
+          </NextLink>
+        </ChakraLink>
         <Text
           className={quicksand.className}
           fontSize="2xl"
@@ -63,6 +63,25 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
         >
           Summary
         </Text>
+
+        <ChakraLink
+          mr="0"
+          ml="auto"
+          asChild
+          as="button"
+          bgColor="blue.100"
+          px="4"
+          py="2"
+          rounded="lg"
+          fontWeight="semibold"
+          className={raleway.className}
+        >
+          <NextLink
+            href={`/portfolio/manual-portfolio/${manualPortfolio.name}/transactions`}
+          >
+            Check Transactions
+          </NextLink>
+        </ChakraLink>
       </Card.Header>
       <Card.Body display="flex" flexDir="column" gap="8">
         <Flex
@@ -170,23 +189,24 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
         flexDir="row"
         justifyContent={"center"}
       >
-        <Link
-          href={`/portfolio/manual-portfolio/${manualPortfolio.name}/update`}
+        <ChakraLink
+          asChild
+          className={raleway.className}
+          fontSize="lg"
+          fontWeight={"semibold"}
+          backgroundColor={"blue.50"}
+          cursor={"pointer"}
+          _hover={{ bg: "blue.100" }}
+          px="8"
+          py="4"
+          borderRadius={"lg"}
         >
-          <Button
-            className={raleway.className}
-            fontSize="lg"
-            fontWeight={"semibold"}
-            backgroundColor={"blue.50"}
-            cursor={"pointer"}
-            _hover={{ bg: "blue.100" }}
-            px="8"
-            py="4"
-            borderRadius={"lg"}
+          <NextLink
+            href={`/portfolio/manual-portfolio/${manualPortfolio.name}/update`}
           >
             Update
-          </Button>
-        </Link>
+          </NextLink>
+        </ChakraLink>
       </Card.Footer>
     </Card.Root>
   );

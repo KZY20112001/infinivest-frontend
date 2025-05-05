@@ -18,9 +18,11 @@ import { Transaction } from "@/types/transaction";
 import { ArrowLeft, ArrowUpIcon, ArrowDownIcon } from "lucide-react";
 
 interface DisplayTransactionsProps {
+  name: string;
   transactions: Transaction[];
 }
 const DisplayTransactions: FC<DisplayTransactionsProps> = ({
+  name,
   transactions,
 }) => {
   const [filter, setFilter] = useState("all");
@@ -80,7 +82,7 @@ const DisplayTransactions: FC<DisplayTransactionsProps> = ({
           flexDir="row"
         >
           <ChakraLink asChild>
-            <NextLink href="/portfolio/robo-portfolio">
+            <NextLink href={`/portfolio/manual-portfolio/${name}`}>
               <ArrowLeft className="text-blue-500 cursor-pointer" />
             </NextLink>
           </ChakraLink>
