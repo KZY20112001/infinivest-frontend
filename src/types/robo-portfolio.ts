@@ -83,6 +83,7 @@ export type RoboPortfolioAssetSummary = {
 
 export type RoboPortfolioCategoryAssets = {
   assets: RoboPortfolioAssetSummary[];
+  reason: string;
 };
 
 export type RoboPortfolioAssetAllocationResponse = {

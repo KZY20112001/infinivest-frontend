@@ -12,7 +12,13 @@ interface DisplayAssetsProps {
 
 const DisplayAssets: FC<DisplayAssetsProps> = ({ assets }) => {
   return (
-    <Flex borderRadius={"lg"} className={quicksand.className} gap="4" w={"70%"}>
+    <Flex
+      borderRadius={"lg"}
+      flexDir="column"
+      className={quicksand.className}
+      gap="4"
+      w={"70%"}
+    >
       <List.Root display="flex" flexDirection="row" gap="8" overflowX="auto">
         {assets.map((asset) => (
           <Tooltip key={asset.symbol} content={asset.name}>
