@@ -11,7 +11,6 @@ import {
 } from "@/app/api/robo-portfolio";
 import { getManualPortfolios } from "@/app/api/manual-portfolio";
 import { getProfile } from "@/app/api/profile";
-import { Fragment } from "react";
 
 export const metadata: Metadata = {
   title: "Infinivest",
@@ -25,7 +24,7 @@ const Home = async () => {
   const rebalanceEvents = await getRebalanceEvents();
 
   return (
-    <Flex direction="column" align="center" p="4" gap="8">
+    <Flex pt="12" direction="column" justify={"center"} align="center" gap="12">
       <Card.Root w="100%" maxW="4xl">
         <Card.Title
           borderBottom="1px solid black"
@@ -162,7 +161,7 @@ const Home = async () => {
                       >
                         Current Value:
                       </Text>
-                      <Text fontWeight="bold">${totalValue}</Text>
+                      <Text fontWeight="bold">${totalValue.toFixed(2)}</Text>
                     </Flex>
 
                     <Flex gap="2">
@@ -296,7 +295,7 @@ const Home = async () => {
                       >
                         Current Value:
                       </Text>
-                      <Text fontWeight="bold">${totalValue}</Text>
+                      <Text fontWeight="bold">${totalValue.toFixed(2)}</Text>
                     </Flex>
 
                     <Flex gap="2">
@@ -363,26 +362,6 @@ const Home = async () => {
           )}
         </Card.Body>
       </Card.Root>
-
-      {/* <Card.Root w="100%" maxW="4xl">
-        <Box borderBottom="1px solid #ccc" p="4">
-          <Text fontSize="xl" fontWeight="bold">
-            AI Insights & Recent Activity
-          </Text>
-        </Box>
-        <Box p="4">
-          <Text mb="4">
-            💡 Insight: Your Robo Portfolio is well-diversified. Consider adding
-            more bonds for lower risk.
-          </Text>
-          <Separator />
-          <Text mt="4">📌 Recent Activity:</Text>
-          <Stack gap="2" mt="2">
-            <Text>- Bought $500 of AAPL in Manual Portfolio 1</Text>
-            <Text>- Robo Portfolio rebalanced on Apr 25, 2025</Text>
-          </Stack>
-        </Box>
-      </Card.Root> */}
     </Flex>
   );
 };

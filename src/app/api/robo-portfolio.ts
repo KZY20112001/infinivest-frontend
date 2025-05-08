@@ -196,3 +196,16 @@ export async function withdrawMoneyFromRoboPortfolio(
     return null;
   }
 }
+
+export async function forceRebalance(): Promise<string> {
+  try {
+    const response = await backendClient<RoboPortfolioResponse | null>(
+      "/portfolio/robo-portfolio/rebalance",
+      { method: "GET" }
+    );
+    return response ? "Portfolio rebalanced" : "Error when rebalancing";
+  } catch (error) {
+    console.error("Error in force rebalancing", error);
+    return "Error when rebalancing";
+  }
+}

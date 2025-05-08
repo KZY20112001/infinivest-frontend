@@ -1,15 +1,19 @@
 "use client";
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import NextLink from "next/link";
 import { Link as ChakraLink, Card, Flex, Text } from "@chakra-ui/react";
 
 import { ArrowLeft } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
 
 import { quicksand, raleway } from "@/app/fonts";
 import AdjustCash from "@/app/portfolio/robo-portfolio/adjust-cash";
 import DisplayCash from "@/app/portfolio/robo-portfolio/display-cash";
 import DisplayCategories from "@/app/portfolio/robo-portfolio/display-categories";
 import { RoboPortfolio, RoboPortfolioSummary } from "@/types/robo-portfolio";
+import { Button } from "@/components/ui/button";
+import { forceRebalance } from "@/app/api/robo-portfolio";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface DisplayRoboPortfolioProps {
   roboPortfolio: RoboPortfolio;
@@ -20,13 +24,24 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
   roboPortfolio,
   roboPortfolioSummary,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const cashCategory = useMemo(
     () =>
       roboPortfolio.categories.find((category) => category.name === "cash")!,
     [roboPortfolio]
   );
+
+  const handleForceRebalance = async () => {
+    setIsLoading(true);
+    const result = await forceRebalance();
+    console.log(result);
+    toast(result);
+    setIsLoading(false);
+  };
   return (
     <Card.Root width="60%">
+      <ToastContainer />
+
       <Card.Header
         borderBottomWidth="2px"
         borderColor="gray.400"
@@ -96,7 +111,41 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
         />
         <DisplayCategories roboPortfolio={roboPortfolio} />
       </Card.Body>
-      <Card.Footer display="flex" gap="8"></Card.Footer>
+      <Card.Footer
+        display="flex"
+        gap="8"
+        flexDir="row"
+        justifyContent="center"
+        alignItems={"center"}
+      >
+        <Button
+          fontWeight={"semibold"}
+          bgColor="green.50"
+          className={raleway.className}
+          px="4"
+          borderRadius="lg"
+          onClick={handleForceRebalance}
+        >
+          {isLoading ? <ClipLoader size={25} /> : "Force Rebalance"}
+        </Button>
+
+        <ChakraLink
+          mr="0"
+          ml="auto"
+          asChild
+          as="button"
+          bgColor="blue.100"
+          px="4"
+          py="2"
+          rounded="lg"
+          fontWeight="semibold"
+          className={raleway.className}
+        >
+          <NextLink href="/portfolio/robo-portfolio/transactions">
+            Rebalance Events
+          </NextLink>
+        </ChakraLink>
+      </Card.Footer>
     </Card.Root>
   );
 };

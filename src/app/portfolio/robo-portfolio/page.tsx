@@ -22,6 +22,8 @@ const RoboPortfolio = async () => {
   if (!roboPortfolio || !roboPortfolioSummary) {
     redirect("/portfolio/robo-portfolio/create");
   }
+  console.log(roboPortfolio);
+  console.log(roboPortfolioSummary);
   return (
     <Flex
       justifyContent={"center"}

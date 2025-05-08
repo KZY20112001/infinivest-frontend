@@ -25,6 +25,7 @@ const ManualPortfolio = async ({
   if (!manualPortfolio || totalValue === -1) {
     redirect("/portfolio");
   }
+  console.log(manualPortfolio);
   return (
     <Flex
       justifyContent={"center"}
