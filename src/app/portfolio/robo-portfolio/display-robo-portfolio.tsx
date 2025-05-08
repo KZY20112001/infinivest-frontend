@@ -14,6 +14,7 @@ import { RoboPortfolio, RoboPortfolioSummary } from "@/types/robo-portfolio";
 import { Button } from "@/components/ui/button";
 import { forceRebalance } from "@/app/api/robo-portfolio";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useRouter } from "next/navigation";
 
 interface DisplayRoboPortfolioProps {
   roboPortfolio: RoboPortfolio;
@@ -24,6 +25,7 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
   roboPortfolio,
   roboPortfolioSummary,
 }) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const cashCategory = useMemo(
     () =>
@@ -36,6 +38,8 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
     const result = await forceRebalance();
     console.log(result);
     toast(result);
+    window.dispatchEvent(new Event("refreshNotifications"));
+    router.refresh();
     setIsLoading(false);
   };
   return (
@@ -141,7 +145,7 @@ const DisplayRoboPortfolio: FC<DisplayRoboPortfolioProps> = ({
           fontWeight="semibold"
           className={raleway.className}
         >
-          <NextLink href="/portfolio/robo-portfolio/transactions">
+          <NextLink href="/portfolio/robo-portfolio/rebalance">
             Rebalance Events
           </NextLink>
         </ChakraLink>

@@ -168,13 +168,14 @@ const UpdateManualPortfolio: FC<UpdateManualPortfolioProps> = ({
               name={manualPortfolio.name}
               liquidCash={manualPortfolio.totalCash}
             />
-          </Flex>{" "}
+          </Flex>
         </Flex>
 
         <DisplayAssets
           assets={manualPortfolio.assets}
           portfolioName={manualPortfolio.name}
         />
+
         <BuyAssets
           totalCash={manualPortfolio.totalCash}
           portfolioName={manualPortfolio.name}

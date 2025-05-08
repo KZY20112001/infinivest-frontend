@@ -33,6 +33,7 @@ const NavbarContent: FC<NavbarContentProps> = ({ notifications }) => {
 
   const handleClearNotifications = async () => {
     await deleteNotifications();
+    window.dispatchEvent(new Event("refreshNotifications"));
     router.refresh();
   };
 

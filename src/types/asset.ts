@@ -4,3 +4,8 @@ export type AssetPriceHistoryPoint = {
 };
 
 export type AssetPriceHistory = AssetPriceHistoryPoint[];
+
+export interface AssetRecommendations {
+  assets: [string, string][];
+  reason: string;
+}

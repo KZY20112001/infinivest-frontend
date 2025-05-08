@@ -169,17 +169,42 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
           >
             Assets
           </Text>
-          <List.Root
-            display="flex"
-            flexDir="row"
-            gap={12}
-            p={4}
-            flexWrap={"wrap"}
-          >
-            {manualPortfolio.assets.map((asset) => (
-              <Asset asset={asset} key={asset.name} />
-            ))}
-          </List.Root>
+          {manualPortfolio.assets.length > 0 ? (
+            <List.Root
+              display="flex"
+              flexDir="row"
+              gap={12}
+              p={4}
+              flexWrap={"wrap"}
+            >
+              {manualPortfolio.assets.map((asset) => (
+                <Asset asset={asset} key={asset.name} />
+              ))}
+            </List.Root>
+          ) : (
+            <Flex justify="center" align={"center"} gap="6">
+              <Text fontWeight="semibold" className={raleway.className}>
+                You do not a any assets yet.
+              </Text>
+
+              <ChakraLink
+                asChild
+                as="button"
+                bgColor="blue.100"
+                px="4"
+                py="2"
+                rounded="lg"
+                fontWeight="semibold"
+                className={raleway.className}
+              >
+                <NextLink
+                  href={`/portfolio/manual-portfolio/${manualPortfolio.name}/update`}
+                >
+                  Add Assets
+                </NextLink>
+              </ChakraLink>
+            </Flex>
+          )}
         </Flex>
       </Card.Body>
       <Card.Footer

@@ -1,7 +1,8 @@
 "use server";
 
 import { microserviceClient } from "@/app/api/client";
-import { AssetPriceHistory } from "@/types/asset";
+import { AssetPriceHistory, AssetRecommendations } from "@/types/asset";
+import { Profile } from "@/types/profile";
 
 export async function getAssetDescription(symbol: string): Promise<string> {
   try {
@@ -64,5 +65,31 @@ export async function getAssetsByKeyword(
   } catch (error) {
     console.error("No assets found", error);
     return [];
+  }
+}
+
+export async function getAssetSuggestions(
+  profile: Profile | null
+): Promise<AssetRecommendations | null> {
+  try {
+    const response = await microserviceClient<AssetRecommendations>(
+      `/assets/suggestions`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          profile: {
+            risk_tolerance: profile?.riskTolerance,
+            investment_style: profile?.investmentStyle,
+            investment_horizon: profile?.investmentHorizon,
+            annual_income: Number(profile?.annualIncome),
+            experience_level: profile?.experienceLevel,
+          },
+        }),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("No assets found", error);
+    return null;
   }
 }
