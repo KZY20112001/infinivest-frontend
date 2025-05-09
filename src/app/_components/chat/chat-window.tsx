@@ -78,7 +78,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
       const portfolioName =
         segments?.[
           segments.length - (segments[segments.length - 1] === "update" ? 2 : 1)
-        ]?.toLowerCase();
+        ];
       console.log(portfolioName);
       const manualPortfolio = await getManualPortfolio(portfolioName!);
       if (manualPortfolio) additionalContext.manualPortfolio = manualPortfolio;
@@ -97,7 +97,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
   return (
     <Flex
       position="absolute"
-      bottom={isOpen ? "3.5rem" : "-50rem"}
+      bottom={isOpen ? "3.5rem" : "-70rem"}
       right="0"
       w="30rem"
       minH="30rem"

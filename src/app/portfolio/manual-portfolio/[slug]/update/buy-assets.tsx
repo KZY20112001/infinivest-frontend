@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import ReactMarkdown from "react-markdown";
 import { Box, Flex, Input, List, Text } from "@chakra-ui/react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { quicksand, raleway } from "@/app/fonts";
 import {
@@ -212,7 +212,6 @@ const Asset = ({
   };
   return (
     <List.Item key={symbol}>
-      <ToastContainer />
       <DialogRoot size={"lg"} onOpenChange={() => fetch(symbol)}>
         <DialogTrigger asChild>
           <Flex

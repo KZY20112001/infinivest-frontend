@@ -14,6 +14,7 @@ import BuyAssets from "@/app/portfolio/manual-portfolio/[slug]/update/buy-assets
 import { Tooltip } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { ManualPortfolio } from "@/types/manual-portfolio";
+import { ToastContainer } from "react-toastify";
 
 interface UpdateManualPortfolioProps {
   manualPortfolio: ManualPortfolio;
@@ -52,6 +53,7 @@ const UpdateManualPortfolio: FC<UpdateManualPortfolioProps> = ({
 
   return (
     <Card.Root w="60%">
+      <ToastContainer />
       <Card.Header
         borderBottomWidth="2px"
         borderColor="gray.400"

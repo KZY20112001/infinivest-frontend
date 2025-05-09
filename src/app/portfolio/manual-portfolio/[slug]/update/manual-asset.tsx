@@ -2,7 +2,7 @@ import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { Flex, Input, List, Text } from "@chakra-ui/react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { getAssetDescription, getAssetPrice } from "@/app/api/assets";
 import { quicksand, raleway } from "@/app/fonts";
@@ -64,7 +64,6 @@ const ManualAsset = ({
 
   return (
     <List.Item>
-      <ToastContainer />
       <DialogRoot size={"lg"} onOpenChange={fetch}>
         <DialogTrigger asChild>
           <Flex

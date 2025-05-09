@@ -151,7 +151,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
                 src={
                   curProfile?.profileUrl && curProfile?.profileUrl !== ""
                     ? curProfile?.profileUrl
-                    : "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+                    : "/profile-placeholder.jpg" //"https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
                 }
                 alt="profile picture"
                 boxSize="250px"

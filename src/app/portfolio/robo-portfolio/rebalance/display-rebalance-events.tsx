@@ -88,11 +88,11 @@ const DisplayRebalanceEvents: FC<DisplayRebalanceEventsProps> = ({
                 fontWeight="bold"
                 color={netChanges >= 0 ? "green.600" : "red.600"}
               >
-                $
                 {netChanges.toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}
+                %
               </Text>
             </Card.Body>
           </Card.Root>
@@ -308,11 +308,12 @@ const DisplayRebalanceEvents: FC<DisplayRebalanceEventsProps> = ({
                           fontWeight="medium"
                           color={event.netChange >= 0 ? "green.600" : "red.600"}
                         >
-                          {event.netChange >= 0 ? "+" : "-"}$
+                          {event.netChange >= 0 ? "+" : "-"}
                           {Math.abs(event.netChange).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
+                          %
                         </Text>
                       </Table.Cell>
                       <Table.Cell textAlign="end">
