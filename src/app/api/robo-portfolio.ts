@@ -10,9 +10,12 @@ import {
   RoboPortfolioSummary,
   RoboPortfolioSummaryResponse,
   ROBO_CATEGORY,
+  RebalanceEvent,
+  RebalanceEventsResponse,
 } from "@/types/robo-portfolio";
+import { Transaction, TransactionsResponse } from "@/types/transaction";
 
-export async function fetchRoboPortfolioSummary(): Promise<RoboPortfolioSummary | null> {
+export async function getRoboPortfolioSummary(): Promise<RoboPortfolioSummary | null> {
   try {
     const response = await backendClient<RoboPortfolioSummaryResponse>(
       "/portfolio/robo-portfolio/summary",
@@ -27,7 +30,7 @@ export async function fetchRoboPortfolioSummary(): Promise<RoboPortfolioSummary 
   }
 }
 
-export async function fetchRoboPortfolio(): Promise<RoboPortfolio | null> {
+export async function getRoboPortfolio(): Promise<RoboPortfolio | null> {
   try {
     const response = await backendClient<RoboPortfolioResponse>(
       "/portfolio/robo-portfolio/details",
@@ -42,6 +45,35 @@ export async function fetchRoboPortfolio(): Promise<RoboPortfolio | null> {
   }
 }
 
+export async function getRoboPortfolioTransactions(): Promise<Transaction[]> {
+  try {
+    const response = await backendClient<TransactionsResponse>(
+      "/portfolio/robo-portfolio/transactions",
+      {
+        method: "GET",
+      }
+    );
+    return response?.transactions ?? [];
+  } catch (error) {
+    console.log("Error in fetching transactions.", error);
+    return [];
+  }
+}
+
+export async function getRebalanceEvents(): Promise<RebalanceEvent[]> {
+  try {
+    const response = await backendClient<RebalanceEventsResponse>(
+      "/portfolio/robo-portfolio/rebalance/details",
+      {
+        method: "GET",
+      }
+    );
+    return response ? response.rebalance_details : [];
+  } catch (error) {
+    console.error("No rebalance events exist", error);
+    return [];
+  }
+}
 export async function generatePortfolioSplit(
   file: File,
   bankName: string,
@@ -116,7 +148,6 @@ export async function createRoboPortfolio(
       },
       allocations,
     };
-    console.log("here: ", req);
     const response = await backendClient<{ message: string }>(
       "/portfolio/robo-portfolio/confirm",
       { method: "POST", body: JSON.stringify(req) }
@@ -158,11 +189,23 @@ export async function withdrawMoneyFromRoboPortfolio(
       "/portfolio/robo-portfolio/withdraw",
       { method: "POST", body: JSON.stringify({ amount }) }
     );
-    console.log(response);
     if (!response) return null;
     return response.amount;
   } catch (error) {
     console.error("Error in withdrawing money from robo portfolio", error);
     return null;
+  }
+}
+
+export async function forceRebalance(): Promise<string> {
+  try {
+    const response = await backendClient<RoboPortfolioResponse | null>(
+      "/portfolio/robo-portfolio/rebalance",
+      { method: "GET" }
+    );
+    return response ? "Portfolio rebalanced" : "Error when rebalancing";
+  } catch (error) {
+    console.error("Error in force rebalancing", error);
+    return "Error when rebalancing";
   }
 }

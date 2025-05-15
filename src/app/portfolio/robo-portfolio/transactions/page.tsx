@@ -1,28 +1,25 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-
 import { Flex, Text } from "@chakra-ui/react";
 
 import {
   getRoboPortfolio,
-  getRoboPortfolioSummary,
+  getRoboPortfolioTransactions,
 } from "@/app/api/robo-portfolio";
+import DisplayTransactions from "@/app/portfolio/robo-portfolio/transactions/display-transactions";
 import { raleway } from "@/app/fonts";
-
-import DisplayRoboPortfolio from "@/app/portfolio/robo-portfolio/display-robo-portfolio";
 
 export const metadata: Metadata = {
   title: "Infinivest | Robo-Portfolio",
   description: "Robo-advised Portfolio",
 };
-
-const RoboPortfolio = async () => {
+const RoboPortfolioTransactions = async () => {
   const roboPortfolio = await getRoboPortfolio();
-  const roboPortfolioSummary = await getRoboPortfolioSummary();
-  if (!roboPortfolio || !roboPortfolioSummary) {
+  const transactions = await getRoboPortfolioTransactions();
+  if (!roboPortfolio) {
     redirect("/portfolio/robo-portfolio/create");
   }
-
+  console.log(transactions);
   return (
     <Flex
       justifyContent={"center"}
@@ -37,14 +34,11 @@ const RoboPortfolio = async () => {
         color="black"
         mb="12"
       >
-        Robo-Advised Portfolio Details
+        Robo-Portfolio Transaction History
       </Text>
-      <DisplayRoboPortfolio
-        roboPortfolio={roboPortfolio}
-        roboPortfolioSummary={roboPortfolioSummary}
-      />
+      <DisplayTransactions transactions={transactions} />
     </Flex>
   );
 };
 
-export default RoboPortfolio;
+export default RoboPortfolioTransactions;

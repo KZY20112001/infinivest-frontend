@@ -1,9 +1,10 @@
+import { FC } from "react";
+
 import { Flex, Text } from "@chakra-ui/react";
-import { BsInfoCircle } from "react-icons/bs";
+import { Info } from "lucide-react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import { Tooltip } from "@/components/ui/tooltip";
-import { FC } from "react";
 
 interface DisplayCashProps {
   cash: number;
@@ -28,7 +29,7 @@ const DisplayCash: FC<DisplayCashProps> = ({ cash, totalPercentage }) => {
           Liquid Cash
         </Text>
         <Tooltip content="Liquid cash is the amount of buffer money put aside as a buffer">
-          <BsInfoCircle color="black" size="20" className="cursor-pointer" />
+          <Info color="black" size="20" className="cursor-pointer" />
         </Tooltip>
       </Flex>
       <Flex fontSize="md" fontWeight={"semibold"} gap="4" alignItems={"center"}>

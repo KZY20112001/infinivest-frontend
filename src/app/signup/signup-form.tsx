@@ -3,10 +3,6 @@ import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { signUp } from "@/app/api/auth";
-import { quicksand, raleway } from "@/app/fonts";
-import { InputGroup } from "@/components/ui/input-group";
-
 import {
   FormControl,
   FormHelperText,
@@ -19,10 +15,14 @@ import {
   Link as ChakraLink,
   Text,
 } from "@chakra-ui/react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Eye, EyeClosed } from "lucide-react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
+
+import { signUp } from "@/app/api/auth";
+import { quicksand, raleway } from "@/app/fonts";
+import { InputGroup } from "@/components/ui/input-group";
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -61,7 +61,7 @@ const SignUpForm = () => {
       const isSuccessful = await signUp(values.email, values.password);
       if (isSuccessful) {
         toast("Successful");
-        router.push("/portfolio");
+        router.push("/home");
       } else {
         toast("Wrong Credentials");
       }
@@ -109,12 +109,12 @@ const SignUpForm = () => {
           <InputGroup
             endElement={
               showPassword ? (
-                <FaEyeSlash
+                <EyeClosed
                   className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 />
               ) : (
-                <FaEye
+                <Eye
                   className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 />
@@ -156,12 +156,12 @@ const SignUpForm = () => {
           <InputGroup
             endElement={
               showConfirmPassword ? (
-                <FaEyeSlash
+                <EyeClosed
                   className="cursor-pointer"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 />
               ) : (
-                <FaEye
+                <Eye
                   className="cursor-pointer"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 />

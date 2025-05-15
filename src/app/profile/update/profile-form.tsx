@@ -1,4 +1,24 @@
 "use client";
+
+import NextLink from "next/link";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
+
+import { FormControl } from "@chakra-ui/form-control";
+import {
+  Button,
+  Card,
+  Flex,
+  Image,
+  Link as ChakraLink,
+  Separator,
+  Text,
+  Input,
+  NativeSelect,
+} from "@chakra-ui/react";
+
 import {
   createProfile,
   generateProfilePictureUploadUrl,
@@ -7,22 +27,6 @@ import {
 import { quicksand, raleway } from "@/app/fonts";
 import { InputGroup } from "@/components/ui/input-group";
 import { Profile } from "@/types/profile";
-import { FormControl } from "@chakra-ui/form-control";
-import {
-  Button,
-  Card,
-  Flex,
-  Image,
-  Link,
-  Separator,
-  Text,
-  Input,
-  NativeSelect,
-} from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
 
 interface ProfileFormProps {
   profile: Profile | null;
@@ -124,11 +128,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
           alignItems="center"
           position="relative"
         >
-          <Link href="/profile">
-            <Button position="absolute" left="4">
-              <FaArrowLeft className="text-blue-500 cursor-pointer" />
-            </Button>
-          </Link>
+          <ChakraLink asChild position="absolute" left="4">
+            <NextLink href="/home">
+              <ArrowLeft className="text-blue-500 cursor-pointer" />
+            </NextLink>
+          </ChakraLink>
           <Text
             className={quicksand.className}
             fontWeight="bold"
@@ -147,7 +151,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ profile }) => {
                 src={
                   curProfile?.profileUrl && curProfile?.profileUrl !== ""
                     ? curProfile?.profileUrl
-                    : "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+                    : "/profile-placeholder.jpg" //"https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
                 }
                 alt="profile picture"
                 boxSize="250px"

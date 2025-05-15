@@ -1,9 +1,10 @@
 "use client";
-import { FC, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FC, useState, useTransition } from "react";
 
-import { BsInfoCircle } from "react-icons/bs";
 import { Card, Flex, Input, Text } from "@chakra-ui/react";
+import { ArrowLeft, Info } from "lucide-react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import { updateManualPortfolio } from "@/app/api/manual-portfolio";
@@ -13,6 +14,7 @@ import BuyAssets from "@/app/portfolio/manual-portfolio/[slug]/update/buy-assets
 import { Tooltip } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { ManualPortfolio } from "@/types/manual-portfolio";
+import { ToastContainer } from "react-toastify";
 
 interface UpdateManualPortfolioProps {
   manualPortfolio: ManualPortfolio;
@@ -51,114 +53,131 @@ const UpdateManualPortfolio: FC<UpdateManualPortfolioProps> = ({
 
   return (
     <Card.Root w="60%">
-      <Card.Header display="flex" flexDir="column" gap={4}>
-        <Flex
-          borderBottomWidth={2}
-          borderColor="black"
-          pb="2"
-          alignItems={"center"}
-          gap="4"
-        >
-          <Text fontSize="xl" className={raleway.className} fontWeight="bold">
-            Name
-          </Text>
-          <Tooltip content="This is the unique name for your portfolio!">
-            <BsInfoCircle className="cursor-pointer" />
-          </Tooltip>
-        </Flex>
-        <Flex
-          gap="4"
-          alignItems="center"
-          fontWeight={"semibold"}
-          className={raleway.className}
-        >
-          <Input
-            placeholder="Unique Name"
-            p="2"
-            size="xs"
-            w="40%"
-            backgroundColor="gray.50"
-            borderRadius="lg"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Button
-            bgColor={isMutating ? "gray.50" : "green.50"}
-            px="4"
-            py="2"
-            borderRadius="lg"
-            disabled={isMutating}
-            onClick={handleNameSubmit}
-          >
-            Update
+      <ToastContainer />
+      <Card.Header
+        borderBottomWidth="2px"
+        borderColor="gray.400"
+        pb="4"
+        display="flex"
+        flexDir="row"
+      >
+        <Link href={`/portfolio/manual-portfolio/${manualPortfolio.name}`}>
+          <Button>
+            <ArrowLeft className="text-blue-500 cursor-pointer" />
           </Button>
-        </Flex>
-
-        {error && (
-          <Text
-            color="red.400"
-            fontSize="sm"
-            w="40%"
-            fontWeight="semibold"
-            className={raleway.className}
-          >
-            {error}
-          </Text>
-        )}
-
-        <Flex
-          pb="6"
-          flexDirection="column"
-          gap="4"
-          borderWidth={1}
-          borderColor="black"
-          borderRadius="xl"
-          px="4"
-          py="2"
-          bgColor="blue.50"
+        </Link>
+        <Text
+          className={quicksand.className}
+          fontSize="2xl"
+          fontWeight={"bold"}
         >
-          <Flex className={quicksand.className} alignItems={"center"} gap="2">
-            <Text fontWeight="bold" fontSize="xl">
-              Liquid Cash
+          Update
+        </Text>
+      </Card.Header>
+      <Card.Body display="flex" flexDirection="column" gap={8}>
+        <Flex flexDir="column" gap={4}>
+          <Flex
+            borderBottomWidth={2}
+            borderColor="black"
+            pb="2"
+            alignItems={"center"}
+            gap="4"
+          >
+            <Text fontSize="xl" className={raleway.className} fontWeight="bold">
+              Name
             </Text>
-            <Tooltip content="Liquid cash is the amount of buffer money put aside as a buffer">
-              <BsInfoCircle
-                color="black"
-                size="20"
-                className="cursor-pointer"
-              />
+            <Tooltip content="This is the unique name for your portfolio!">
+              <Info className="cursor-pointer" />
             </Tooltip>
           </Flex>
           <Flex
-            fontSize="md"
-            fontWeight={"semibold"}
             gap="4"
-            alignItems={"center"}
+            alignItems="center"
+            fontWeight={"semibold"}
+            className={raleway.className}
           >
-            <Text w="48" className={raleway.className}>
-              Currently Available:
-            </Text>
-            <Text
-              px="8"
-              borderRadius="xl"
-              py="1"
-              fontSize="lg"
-              className={quicksand.className}
+            <Input
+              placeholder="Unique Name"
+              p="2"
+              size="xs"
+              w="40%"
+              backgroundColor="gray.50"
+              borderRadius="lg"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Button
+              bgColor={isMutating ? "gray.50" : "green.50"}
+              px="4"
+              py="2"
+              borderRadius="lg"
+              disabled={isMutating}
+              onClick={handleNameSubmit}
             >
-              $ {manualPortfolio.totalCash.toFixed(2)}
-            </Text>
+              Update
+            </Button>
           </Flex>
-          <AdjustCash
-            name={manualPortfolio.name}
-            liquidCash={manualPortfolio.totalCash}
-          />
+          {error && (
+            <Text
+              color="red.400"
+              fontSize="sm"
+              w="40%"
+              fontWeight="semibold"
+              className={raleway.className}
+            >
+              {error}
+            </Text>
+          )}
+          <Flex
+            pb="6"
+            flexDirection="column"
+            gap="4"
+            borderWidth={1}
+            borderColor="black"
+            borderRadius="xl"
+            px="4"
+            py="2"
+            bgColor="blue.50"
+          >
+            <Flex className={quicksand.className} alignItems={"center"} gap="2">
+              <Text fontWeight="bold" fontSize="xl">
+                Liquid Cash
+              </Text>
+              <Tooltip content="Liquid cash is the amount of buffer money put aside as a buffer">
+                <Info color="black" size="20" className="cursor-pointer" />
+              </Tooltip>
+            </Flex>
+            <Flex
+              fontSize="md"
+              fontWeight={"semibold"}
+              gap="4"
+              alignItems={"center"}
+            >
+              <Text w="48" className={raleway.className}>
+                Currently Available:
+              </Text>
+              <Text
+                px="8"
+                borderRadius="xl"
+                py="1"
+                fontSize="lg"
+                className={quicksand.className}
+              >
+                $ {manualPortfolio.totalCash.toFixed(2)}
+              </Text>
+            </Flex>
+            <AdjustCash
+              name={manualPortfolio.name}
+              liquidCash={manualPortfolio.totalCash}
+            />
+          </Flex>
         </Flex>
-      </Card.Header>
-      <Card.Body display="flex" flexDirection="column" gap={8}>
+
         <DisplayAssets
           assets={manualPortfolio.assets}
           portfolioName={manualPortfolio.name}
         />
+
         <BuyAssets
           totalCash={manualPortfolio.totalCash}
           portfolioName={manualPortfolio.name}

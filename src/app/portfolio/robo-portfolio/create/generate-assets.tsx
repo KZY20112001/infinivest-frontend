@@ -86,45 +86,61 @@ const GenerateAssets: FC<GenerateAssetsProps> = ({
             return (
               <List.Item
                 display="flex"
+                flexDir="column"
                 key={category}
-                alignItems="center"
-                gap={16}
                 borderBottomWidth="1px"
                 borderColor="gray.400"
                 pb="2"
-                h={12}
               >
-                <Flex>
-                  <Text
-                    width={48}
-                    fontWeight="semibold"
-                    textTransform="capitalize"
-                    className={quicksand.className}
-                  >
-                    {category.replace(/([A-Z])/g, " $1").trim()}
-                  </Text>
-                  <InputGroup endElement="%">
-                    <Input
-                      className={quicksand.className}
-                      type="number"
+                <Flex gap={16} alignItems="center">
+                  <Flex w="16rem">
+                    <Text
+                      width={48}
                       fontWeight="semibold"
-                      value={percentage}
-                      onChange={(e) =>
-                        handleInputChange(
-                          category as keyof RoboPortfolioSplit,
-                          e.target.value
-                        )
-                      }
-                      px="2"
-                      min="0"
-                      max="100"
-                      width={20}
-                      height={4}
-                    />
-                  </InputGroup>
+                      textTransform="capitalize"
+                      className={quicksand.className}
+                    >
+                      {category.replace(/([A-Z])/g, " $1").trim()}
+                    </Text>
+                    <InputGroup endElement="%">
+                      <Input
+                        className={quicksand.className}
+                        type="number"
+                        fontWeight="semibold"
+                        value={percentage}
+                        onChange={(e) =>
+                          handleInputChange(
+                            category as keyof RoboPortfolioSplit,
+                            e.target.value
+                          )
+                        }
+                        px="2"
+                        min="0"
+                        max="100"
+                        width={20}
+                        height={4}
+                      />
+                    </InputGroup>
+                  </Flex>
+                  {categoryAssets && (
+                    <DisplayAssets assets={categoryAssets.assets} />
+                  )}
                 </Flex>
-                {categoryAssets && (
-                  <DisplayAssets assets={categoryAssets.assets} />
+                {categoryAssets && categoryAssets.reason !== "" && (
+                  <Text
+                    bgColor="green.50"
+                    rounded="lg"
+                    className={raleway.className}
+                    fontWeight="semibold"
+                    h="5rem"
+                    my="2"
+                    mx="8"
+                    px="4"
+                    py="2"
+                    overflow={"scroll"}
+                  >
+                    {categoryAssets.reason}
+                  </Text>
                 )}
               </List.Item>
             );

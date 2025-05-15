@@ -6,6 +6,7 @@ import {
   ManualPortfoliosSummariesResponse,
   ManualPortfolioSummary,
 } from "@/types/manual-portfolio";
+import { Transaction, TransactionsResponse } from "@/types/transaction";
 
 export async function getManualPortfolios(): Promise<ManualPortfolioSummary[]> {
   try {
@@ -39,6 +40,22 @@ export async function getManualPortfolio(
   }
 }
 
+export async function getManualPortfolioTransactions(
+  name: string
+): Promise<Transaction[]> {
+  try {
+    const response = await backendClient<TransactionsResponse>(
+      `/portfolio/manual-portfolio/${name}/transactions`,
+      {
+        method: "GET",
+      }
+    );
+    return response?.transactions ?? [];
+  } catch (error) {
+    console.log("Error in fetching transactions.", error);
+    return [];
+  }
+}
 export async function getManualPortfolioValue(name: string): Promise<number> {
   try {
     const response = await backendClient<{ amount: number }>(

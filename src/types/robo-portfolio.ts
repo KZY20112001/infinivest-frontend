@@ -6,6 +6,24 @@ export type ROBO_CATEGORY =
   | "intermediate_bonds"
   | "international_bonds";
 
+export type RebalanceEvent = {
+  CreatedAt: string;
+  totalBuyAmount: number;
+  totalSellAmount: number;
+  netChange: number;
+
+  success: boolean;
+  reason?: string;
+
+  portfolioValueBefore: number;
+  portfolioValueAfter: number;
+  gainOrLoss: number;
+};
+
+export type RebalanceEventsResponse = {
+  rebalance_details: RebalanceEvent[];
+};
+
 export type RoboPortfolioAsset = {
   symbol: string;
   name: string;
@@ -31,6 +49,7 @@ export type RoboPortfolio = {
 export type RoboPortfolioSummary = {
   rebalanceFreq: string;
   totalValue: number;
+  totalInvested: number;
 };
 
 export type RoboPortfolioResponse = {
@@ -64,6 +83,7 @@ export type RoboPortfolioAssetSummary = {
 
 export type RoboPortfolioCategoryAssets = {
   assets: RoboPortfolioAssetSummary[];
+  reason: string;
 };
 
 export type RoboPortfolioAssetAllocationResponse = {

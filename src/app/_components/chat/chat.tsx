@@ -3,7 +3,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { Box, IconButton } from "@chakra-ui/react";
-import { TbMessageChatbot } from "react-icons/tb";
+import { MessageCircle } from "lucide-react";
 
 import { PUBLIC_ROUTES } from "@/config";
 import ChatWindow from "@/app/_components/chat/chat-window";
@@ -26,7 +26,7 @@ const Chat = () => {
         bgColor="blue.100"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <TbMessageChatbot className="invert" />
+        <MessageCircle className="invert" />
       </IconButton>
 
       <ChatWindow isOpen={isOpen} onClose={() => setIsOpen(false)} />

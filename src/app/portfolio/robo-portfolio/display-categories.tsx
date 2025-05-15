@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 
-import { BsInfoCircle } from "react-icons/bs";
+import { Info } from "lucide-react";
 
 import { quicksand } from "@/app/fonts";
 import DisplayCategory from "@/app/portfolio/robo-portfolio/display-category";
@@ -30,7 +30,7 @@ const DisplayCategories: FC<DisplayCategoriesProps> = ({ roboPortfolio }) => {
           Assets
         </Text>
         <Tooltip content="Summary of your assets">
-          <BsInfoCircle color="black" size="20" className="cursor-pointer" />
+          <Info color="black" size="20" className="cursor-pointer" />
         </Tooltip>
       </Flex>
 

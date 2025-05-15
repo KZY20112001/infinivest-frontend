@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { BsInfoCircle } from "react-icons/bs";
+
 import { Flex, List, Text } from "@chakra-ui/react";
+import { Info } from "lucide-react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import ManualAsset from "@/app/portfolio/manual-portfolio/[slug]/update/manual-asset";
@@ -25,7 +26,7 @@ const DisplayAssets: FC<DisplayAssetsProps> = ({ assets, portfolioName }) => {
           Assets
         </Text>
         <Tooltip content="Click on individual assets to see the details and sell them">
-          <BsInfoCircle className="cursor-pointer" />
+          <Info className="cursor-pointer" />
         </Tooltip>
       </Flex>
       {assets.length > 0 ? (

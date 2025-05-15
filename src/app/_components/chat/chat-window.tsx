@@ -2,8 +2,8 @@
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-import { PiFinnTheHuman } from "react-icons/pi";
-import { IoClose, IoSend } from "react-icons/io5";
+import { Bot, CircleX, SendHorizontal } from "lucide-react";
+
 import ReactMarkdown from "react-markdown";
 
 import {
@@ -20,7 +20,7 @@ import {
 import { quicksand, raleway } from "@/app/fonts";
 import { getProfile } from "@/app/api/profile";
 import { Message, QueryContext } from "@/types/chat";
-import { fetchRoboPortfolio } from "@/app/api/robo-portfolio";
+import { getRoboPortfolio } from "@/app/api/robo-portfolio";
 import { getManualPortfolio } from "@/app/api/manual-portfolio";
 import { getReply } from "@/app/api/chat";
 
@@ -70,7 +70,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
     if (userProfile) additionalContext.profile = userProfile;
 
     if (pathname.includes("/robo-portfolio")) {
-      const roboPortfolioData = await fetchRoboPortfolio();
+      const roboPortfolioData = await getRoboPortfolio();
       if (roboPortfolioData)
         additionalContext.roboPortfolio = roboPortfolioData;
     } else if (pathname.includes("/manual-portfolio")) {
@@ -78,7 +78,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
       const portfolioName =
         segments?.[
           segments.length - (segments[segments.length - 1] === "update" ? 2 : 1)
-        ]?.toLowerCase();
+        ];
       console.log(portfolioName);
       const manualPortfolio = await getManualPortfolio(portfolioName!);
       if (manualPortfolio) additionalContext.manualPortfolio = manualPortfolio;
@@ -97,7 +97,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
   return (
     <Flex
       position="absolute"
-      bottom={isOpen ? "3.5rem" : "-50rem"}
+      bottom={isOpen ? "3.5rem" : "-70rem"}
       right="0"
       w="30rem"
       minH="30rem"
@@ -138,7 +138,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
           bgColor="blue.50"
           onClick={onClose}
         >
-          <IoClose className="invert" />
+          <CircleX className="invert" />
         </IconButton>
       </HStack>
 
@@ -151,9 +151,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
             justify={msg.role === "user" ? "flex-end" : "flex-start"}
             w="100%"
           >
-            {msg.role === "assistant" && (
-              <PiFinnTheHuman color="gray" size="1.5rem" />
-            )}
+            {msg.role === "assistant" && <Bot color="gray" size="1.5rem" />}
 
             <Box
               alignSelf={msg.role === "user" ? "flex-end" : "flex-start"}
@@ -185,7 +183,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isOpen, onClose }) => {
           onChange={(e) => setInput(e.target.value)}
         />
         <Button colorScheme="blue" onClick={sendMessage}>
-          <IoSend className="invert" />
+          <SendHorizontal className="invert" />
         </Button>
       </HStack>
     </Flex>

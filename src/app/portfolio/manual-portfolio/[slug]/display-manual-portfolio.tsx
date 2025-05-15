@@ -1,9 +1,11 @@
 "use client";
 import { FC, useState } from "react";
+import NextLink from "next/link";
 
 import ClipLoader from "react-spinners/ClipLoader";
-import { Card, Flex, List, Text } from "@chakra-ui/react";
-import { BsInfoCircle } from "react-icons/bs";
+import { Link as ChakraLink, Card, Flex, List, Text } from "@chakra-ui/react";
+
+import { ArrowLeft, Info } from "lucide-react";
 
 import { quicksand, raleway } from "@/app/fonts";
 import AdjustCash from "@/app/portfolio/manual-portfolio/[slug]/adjust-cash";
@@ -43,14 +45,43 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
   return (
     <Card.Root width="60%">
       <Card.Header
-        className={quicksand.className}
-        fontSize="2xl"
-        fontWeight={"bold"}
         borderBottomWidth="2px"
         borderColor="gray.400"
         pb="4"
+        display="flex"
+        flexDir="row"
       >
-        Summary
+        <ChakraLink asChild>
+          <NextLink href="/portfolio">
+            <ArrowLeft className="text-blue-500 cursor-pointer" />
+          </NextLink>
+        </ChakraLink>
+        <Text
+          className={quicksand.className}
+          fontSize="2xl"
+          fontWeight={"bold"}
+        >
+          Summary
+        </Text>
+
+        <ChakraLink
+          mr="0"
+          ml="auto"
+          asChild
+          as="button"
+          bgColor="blue.100"
+          px="4"
+          py="2"
+          rounded="lg"
+          fontWeight="semibold"
+          className={raleway.className}
+        >
+          <NextLink
+            href={`/portfolio/manual-portfolio/${manualPortfolio.name}/transactions`}
+          >
+            Check Transactions
+          </NextLink>
+        </ChakraLink>
       </Card.Header>
       <Card.Body display="flex" flexDir="column" gap="8">
         <Flex
@@ -95,11 +126,7 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
               Liquid Cash
             </Text>
             <Tooltip content="Liquid cash is the amount of buffer money put aside as a buffer">
-              <BsInfoCircle
-                color="black"
-                size="20"
-                className="cursor-pointer"
-              />
+              <Info color="black" size="20" className="cursor-pointer" />
             </Tooltip>
           </Flex>
           <Flex
@@ -142,19 +169,70 @@ const DisplayManualPorfolio: FC<DisplayManualPorfolioProps> = ({
           >
             Assets
           </Text>
-          <List.Root
-            display="flex"
-            flexDir="row"
-            gap={12}
-            p={4}
-            flexWrap={"wrap"}
-          >
-            {manualPortfolio.assets.map((asset) => (
-              <Asset asset={asset} key={asset.name} />
-            ))}
-          </List.Root>
+          {manualPortfolio.assets.length > 0 ? (
+            <List.Root
+              display="flex"
+              flexDir="row"
+              gap={12}
+              p={4}
+              flexWrap={"wrap"}
+            >
+              {manualPortfolio.assets.map((asset) => (
+                <Asset asset={asset} key={asset.name} />
+              ))}
+            </List.Root>
+          ) : (
+            <Flex justify="center" align={"center"} gap="6">
+              <Text fontWeight="semibold" className={raleway.className}>
+                You do not a any assets yet.
+              </Text>
+
+              <ChakraLink
+                asChild
+                as="button"
+                bgColor="blue.100"
+                px="4"
+                py="2"
+                rounded="lg"
+                fontWeight="semibold"
+                className={raleway.className}
+              >
+                <NextLink
+                  href={`/portfolio/manual-portfolio/${manualPortfolio.name}/update`}
+                >
+                  Add Assets
+                </NextLink>
+              </ChakraLink>
+            </Flex>
+          )}
         </Flex>
       </Card.Body>
+      <Card.Footer
+        borderBottomWidth="2px"
+        borderColor="gray.400"
+        display="flex"
+        flexDir="row"
+        justifyContent={"center"}
+      >
+        <ChakraLink
+          asChild
+          className={raleway.className}
+          fontSize="lg"
+          fontWeight={"semibold"}
+          backgroundColor={"blue.50"}
+          cursor={"pointer"}
+          _hover={{ bg: "blue.100" }}
+          px="8"
+          py="4"
+          borderRadius={"lg"}
+        >
+          <NextLink
+            href={`/portfolio/manual-portfolio/${manualPortfolio.name}/update`}
+          >
+            Update
+          </NextLink>
+        </ChakraLink>
+      </Card.Footer>
     </Card.Root>
   );
 };

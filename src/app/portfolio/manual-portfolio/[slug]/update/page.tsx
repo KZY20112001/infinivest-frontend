@@ -1,10 +1,10 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Flex, Text } from "@chakra-ui/react";
 
 import { getManualPortfolio } from "@/app/api/manual-portfolio";
 import { raleway } from "@/app/fonts";
 import UpdateManualPortfolio from "@/app/portfolio/manual-portfolio/[slug]/update/update-manual-portfolio";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Infinivest | Manual Portfolio",
@@ -36,7 +36,7 @@ const UpdateManualPortfolioPage = async ({
         color="black"
         mb="12"
       >
-        Update Portfolio - {manualPortfolio.name}
+        {manualPortfolio.name}
       </Text>
       <UpdateManualPortfolio manualPortfolio={manualPortfolio} />
     </Flex>

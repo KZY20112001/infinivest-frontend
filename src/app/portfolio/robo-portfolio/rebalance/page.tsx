@@ -1,28 +1,29 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-
 import { Flex, Text } from "@chakra-ui/react";
 
-import {
-  getRoboPortfolio,
-  getRoboPortfolioSummary,
-} from "@/app/api/robo-portfolio";
 import { raleway } from "@/app/fonts";
+import {
+  getRebalanceEvents,
+  getRoboPortfolio,
+  getRoboPortfolioTransactions,
+} from "@/app/api/robo-portfolio";
 
-import DisplayRoboPortfolio from "@/app/portfolio/robo-portfolio/display-robo-portfolio";
+import DisplayRebalanceEvents from "./display-rebalance-events";
 
 export const metadata: Metadata = {
   title: "Infinivest | Robo-Portfolio",
   description: "Robo-advised Portfolio",
 };
-
-const RoboPortfolio = async () => {
+const RebalanceEvents = async () => {
   const roboPortfolio = await getRoboPortfolio();
-  const roboPortfolioSummary = await getRoboPortfolioSummary();
-  if (!roboPortfolio || !roboPortfolioSummary) {
+  const transactions = await getRoboPortfolioTransactions();
+  if (!roboPortfolio) {
     redirect("/portfolio/robo-portfolio/create");
   }
-
+  console.log(transactions);
+  const rebalanceEvents = await getRebalanceEvents();
+  console.log(rebalanceEvents);
   return (
     <Flex
       justifyContent={"center"}
@@ -37,14 +38,11 @@ const RoboPortfolio = async () => {
         color="black"
         mb="12"
       >
-        Robo-Advised Portfolio Details
+        Robo-Portfolio Rebalance Events
       </Text>
-      <DisplayRoboPortfolio
-        roboPortfolio={roboPortfolio}
-        roboPortfolioSummary={roboPortfolioSummary}
-      />
+      <DisplayRebalanceEvents events={rebalanceEvents} />
     </Flex>
   );
 };
 
-export default RoboPortfolio;
+export default RebalanceEvents;

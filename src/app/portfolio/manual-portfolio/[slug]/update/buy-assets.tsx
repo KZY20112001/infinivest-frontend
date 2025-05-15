@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
 
-import { Flex, Input, List, Text } from "@chakra-ui/react";
-import { ToastContainer, toast } from "react-toastify";
+import ReactMarkdown from "react-markdown";
+import { Box, Flex, Input, List, Text } from "@chakra-ui/react";
+import { toast } from "react-toastify";
 
 import { quicksand, raleway } from "@/app/fonts";
 import {
@@ -9,6 +10,7 @@ import {
   getAssetDescription,
   getAssetPrice,
   getAssetHistory,
+  getAssetSuggestions,
 } from "@/app/api/assets";
 
 import { Button } from "@/components/ui/button";
@@ -29,6 +31,7 @@ import { buyAsset } from "@/app/api/manual-portfolio";
 import { useRouter } from "next/navigation";
 import { AssetPriceHistory } from "@/types/asset";
 import PriceChart from "@/app/portfolio/price-chart";
+import { getProfile } from "@/app/api/profile";
 
 interface BuyAssetsProps {
   portfolioName: string;
@@ -37,15 +40,28 @@ interface BuyAssetsProps {
 const BuyAssets: FC<BuyAssetsProps> = ({ totalCash, portfolioName }) => {
   const [results, setResults] = useState<[string, string][]>([]);
   const [query, setQuery] = useState("");
-
-  const [isLoading, setIsLoading] = useState(false);
+  const [reason, setReason] = useState("");
+  const [isLoading, setIsLoading] = useState({
+    search: false,
+    suggestion: false,
+  });
 
   const handleSearch = async () => {
     if (query.length < 3) return;
-    setIsLoading(true);
+    setIsLoading((prev) => ({ ...prev, search: true }));
     const res = await getAssetsByKeyword(query);
     setResults(res);
-    setIsLoading(false);
+    setIsLoading((prev) => ({ ...prev, search: false }));
+  };
+
+  const handleSuggestions = async () => {
+    setIsLoading((prev) => ({ ...prev, suggestion: true }));
+    const profile = await getProfile();
+    console.log(profile);
+    const res = await getAssetSuggestions(profile);
+    setReason(res?.reason ?? "");
+    setResults(res?.assets ?? []);
+    setIsLoading((prev) => ({ ...prev, suggestion: false }));
   };
 
   return (
@@ -83,20 +99,21 @@ const BuyAssets: FC<BuyAssetsProps> = ({ totalCash, portfolioName }) => {
           px="4"
           py="2"
           borderRadius="lg"
-          disabled={isLoading}
+          disabled={isLoading.search}
           onClick={handleSearch}
         >
           Search
         </Button>
         <Button
-          bgColor={isLoading ? "gray.50" : "red.200"}
+          bgColor={isLoading.search ? "gray.50" : "red.200"}
           px="4"
           py="2"
           borderRadius="lg"
-          disabled={isLoading || results.length === 0}
+          disabled={isLoading.search || results.length === 0}
           onClick={() => {
             setResults([]);
             setQuery("");
+            setReason("");
           }}
         >
           Clear
@@ -104,7 +121,7 @@ const BuyAssets: FC<BuyAssetsProps> = ({ totalCash, portfolioName }) => {
       </Flex>
 
       <List.Root display="flex" flexDir="row" gap={12} p={4} flexWrap={"wrap"}>
-        {isLoading ? (
+        {isLoading.search || isLoading.suggestion ? (
           <ClipLoader />
         ) : (
           results.map(([symbol, name]) => (
@@ -118,6 +135,34 @@ const BuyAssets: FC<BuyAssetsProps> = ({ totalCash, portfolioName }) => {
           ))
         )}
       </List.Root>
+
+      {reason !== "" && (
+        <Box
+          bgColor="gray.100"
+          p="4"
+          rounded={"lg"}
+          className={quicksand.className}
+          maxH="20rem"
+          overflowY="scroll"
+        >
+          <ReactMarkdown>{reason}</ReactMarkdown>
+        </Box>
+      )}
+
+      <Button
+        bgColor="green.100"
+        px="4"
+        py="2"
+        w="40"
+        display="flex"
+        justifyContent="center"
+        rounded="lg"
+        fontWeight="semibold"
+        className={raleway.className}
+        onClick={handleSuggestions}
+      >
+        {isLoading.suggestion ? <ClipLoader size={25} /> : "Get Suggestions!"}
+      </Button>
     </Flex>
   );
 };
@@ -167,7 +212,6 @@ const Asset = ({
   };
   return (
     <List.Item key={symbol}>
-      <ToastContainer />
       <DialogRoot size={"lg"} onOpenChange={() => fetch(symbol)}>
         <DialogTrigger asChild>
           <Flex

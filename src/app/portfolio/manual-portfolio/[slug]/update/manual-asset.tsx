@@ -2,7 +2,7 @@ import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { Flex, Input, List, Text } from "@chakra-ui/react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { getAssetDescription, getAssetPrice } from "@/app/api/assets";
 import { quicksand, raleway } from "@/app/fonts";
@@ -64,7 +64,6 @@ const ManualAsset = ({
 
   return (
     <List.Item>
-      <ToastContainer />
       <DialogRoot size={"lg"} onOpenChange={fetch}>
         <DialogTrigger asChild>
           <Flex
@@ -235,7 +234,7 @@ const ManualAsset = ({
           <DialogFooter className={raleway.className} fontWeight={"semibold"}>
             <Button
               bgColor={valid ? "green.50" : "gray.50"}
-              disabled={!valid}
+              disabled={!valid || amount === 0}
               px="4"
               py="1"
               w="28"

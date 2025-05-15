@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import { Button, Flex, NativeSelect, Text } from "@chakra-ui/react";
 
-import { FiUpload } from "react-icons/fi";
-import { TiDelete } from "react-icons/ti";
+import { Upload, Trash } from "lucide-react";
+
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { quicksand, raleway } from "@/app/fonts";
@@ -88,7 +88,7 @@ const GeneratePortfolioSplit: FC<GeneratePortfolioSplitProps> = ({
             backgroundColor={"green.50"}
             px="4"
           >
-            <FiUpload className="mt-1" />
+            <Upload className="mt-1" />
             <Text className={raleway.className} fontWeight={"semibold"} ml={1}>
               Upload File
             </Text>
@@ -98,7 +98,7 @@ const GeneratePortfolioSplit: FC<GeneratePortfolioSplitProps> = ({
               <Text className={quicksand.className} w="16" overflowX="clip">
                 {selectedFile.name}
               </Text>
-              <TiDelete
+              <Trash
                 className="cursor-pointer"
                 onClick={() => setSelectedFile(null)}
               />

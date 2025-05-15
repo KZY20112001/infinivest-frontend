@@ -2,7 +2,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { Flex, Text, Input } from "@chakra-ui/react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import {
@@ -50,7 +50,6 @@ const AdjustCash = () => {
   const withDrawMoney = async () => {
     setIsLoading(true);
     const result = await withdrawMoneyFromRoboPortfolio(amount);
-    console.log("result: ", result);
     if (result !== null) {
       toast(`Withdrawn $${result}`);
       setAmountWithdrawn(() => amountWithdrawn + result);
@@ -65,7 +64,6 @@ const AdjustCash = () => {
   };
   return (
     <Flex gap="8" justifyContent={"center"}>
-      <ToastContainer />
       <DialogRoot>
         <DialogTrigger asChild>
           <Button

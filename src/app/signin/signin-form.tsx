@@ -3,21 +3,22 @@ import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { signIn } from "@/app/api/auth";
-import { quicksand, raleway } from "@/app/fonts";
-import { InputGroup } from "@/components/ui/input-group";
-import { Button } from "@/components/ui/button";
-
 import {
   FormControl,
   FormHelperText,
   FormLabel,
 } from "@chakra-ui/form-control";
 import { Flex, Input, Text, Link as ChakraLink } from "@chakra-ui/react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Eye, EyeClosed } from "lucide-react";
+
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
+
+import { signIn } from "@/app/api/auth";
+import { quicksand, raleway } from "@/app/fonts";
+import { InputGroup } from "@/components/ui/input-group";
+import { Button } from "@/components/ui/button";
 
 const SignInForm = () => {
   const router = useRouter();
@@ -46,7 +47,7 @@ const SignInForm = () => {
       const isSuccessful = await signIn(values.email, values.password);
       if (isSuccessful) {
         toast("Successful");
-        router.push("/portfolio");
+        router.push("/home");
       } else {
         toast("Wrong Credentials");
       }
@@ -94,12 +95,12 @@ const SignInForm = () => {
           <InputGroup
             endElement={
               showPassword ? (
-                <FaEyeSlash
+                <EyeClosed
                   className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 />
               ) : (
-                <FaEye
+                <Eye
                   className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 />

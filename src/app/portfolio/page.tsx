@@ -1,12 +1,15 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-import { FaArrowRight } from "react-icons/fa";
-import { Card, Flex, Text, Button } from "@chakra-ui/react";
+import { ArrowRight } from "lucide-react";
 
-import { fetchRoboPortfolioSummary } from "@/app/api/robo-portfolio";
+import { Card, Flex, Text } from "@chakra-ui/react";
+
+import { getRoboPortfolioSummary } from "@/app/api/robo-portfolio";
 import { getManualPortfolios } from "@/app/api/manual-portfolio";
 import { geistMono, quicksand, raleway } from "@/app/fonts";
+
+import CreateManualPortfolio from "@/app/portfolio/create-manual-portfolio";
 
 export const metadata: Metadata = {
   title: "Infinivest | Portfolios",
@@ -14,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 const Portfolio = async () => {
-  const roboPortfolioSummary = await fetchRoboPortfolioSummary();
+  const roboPortfolioSummary = await getRoboPortfolioSummary();
   const manualPortfolios = await getManualPortfolios();
   return (
     <Flex
@@ -50,7 +53,7 @@ const Portfolio = async () => {
           >
             <Text>Robo-advised Portfolio</Text>
             <Link href="/portfolio/robo-portfolio">
-              <FaArrowRight className="text-blue-500 cursor-pointer" />
+              <ArrowRight className="text-blue-500 cursor-pointer" />
             </Link>
           </Card.Header>
           <Card.Body
@@ -116,7 +119,7 @@ const Portfolio = async () => {
                 >
                   <Text className={quicksand.className}>{portfolio.name}</Text>
                   <Link href={`/portfolio/manual-portfolio/${portfolio.name}`}>
-                    <FaArrowRight className="text-blue-500 cursor-pointer" />
+                    <ArrowRight className="text-blue-500 cursor-pointer" />
                   </Link>
                 </Card.Header>
                 <Card.Body
@@ -134,19 +137,7 @@ const Portfolio = async () => {
             ))}
           </Card.Body>
           <Card.Footer display={"flex"} justifyContent={"center"}>
-            <Button
-              className={raleway.className}
-              fontSize="lg"
-              fontWeight={"semibold"}
-              backgroundColor={"blue.50"}
-              cursor={"pointer"}
-              _hover={{ bg: "blue.100" }}
-              px="8"
-              py="4"
-              borderRadius={"lg"}
-            >
-              Add a new manual portfolio
-            </Button>
+            <CreateManualPortfolio />
           </Card.Footer>
         </Card.Root>
       </Flex>
